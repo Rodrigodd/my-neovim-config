@@ -12,20 +12,10 @@ set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
 language en                 " sets the language of the messages / ui (vim)
 ]])
 
--- keymap utils
-local function keymap(mode, lhs, rhs, opts)
-    if opts == nil then
-        opts = { noremap = true, silent = true }
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
-
-local function buf_keymap(bufnr, mode, lhs, rhs, opts)
-    if opts == nil then
-        opts = { noremap = true, silent = true }
-    end
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-end
+-- keymap util
+local map = vim.keymap.set
+local augroup = function(name, opts) vim.api.nvim_create_augroup(name, opts or {}) end
+local aucmd = vim.api.nvim_create_autocmd
 
 
 -- Install packer
@@ -273,38 +263,38 @@ vim.cmd[[colorscheme material]]
 vim.o.guifont = [[CaskaydiaCove NF:h9]]
 
 --Remap space as leader key
-keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
+map('', '<Space>', '<Nop>', { silent=true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 --Remap for dealing with word wrap
-keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap=true, expr = true, silent = true})
-keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", {noremap= true, expr = true, silent = true})
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true})
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true})
 
 -- disable arrows
-keymap('n', '<Up>', '<Nop>')
-keymap('n', '<Down>', '<Nop>')
-keymap('n', '<Left>', '<Nop>')
-keymap('n', '<Right>', '<Nop>')
+map('n', '<Up>', '<Nop>')
+map('n', '<Down>', '<Nop>')
+map('n', '<Left>', '<Nop>')
+map('n', '<Right>', '<Nop>')
 
 -- move beetwen windows
-keymap('t', '<A-h>', [[<C-\><C-n><C-w>h]])
-keymap('t', '<A-j>', [[<C-\><C-n><C-w>j]])
-keymap('t', '<A-k>', [[<C-\><C-n><C-w>k]])
-keymap('t', '<A-l>', [[<C-\><C-n><C-w>l]])
-keymap('n', '<A-h>', [[<C-w>h]])
-keymap('n', '<A-j>', [[<C-w>j]])
-keymap('n', '<A-k>', [[<C-w>k]])
-keymap('n', '<A-l>', [[<C-w>l]])
+map('t', '<A-h>', [[<C-\><C-n><C-w>h]])
+map('t', '<A-j>', [[<C-\><C-n><C-w>j]])
+map('t', '<A-k>', [[<C-\><C-n><C-w>k]])
+map('t', '<A-l>', [[<C-\><C-n><C-w>l]])
+map('n', '<A-h>', [[<C-w>h]])
+map('n', '<A-j>', [[<C-w>j]])
+map('n', '<A-k>', [[<C-w>k]])
+map('n', '<A-l>', [[<C-w>l]])
 
 -- move beetwen tabs
-keymap('t', 'H', [[<C-\><C-n>gT]])
-keymap('t', 'L', [[<C-\><C-n>gt]])
-keymap('n', 'H', [[gT]])
-keymap('n', 'L', [[gt]])
+map('t', 'H', [[<C-\><C-n>gT]])
+map('t', 'L', [[<C-\><C-n>gt]])
+map('n', 'H', [[gT]])
+map('n', 'L', [[gt]])
 
 -- open init.lua
-keymap('n', '<F12>', [[:tabnew +exe\ "tcd\ "\ .\ fnamemodify($MYVIMRC,\ ":p:h") $MYVIMRC<CR>]])
+map('n', '<F12>', [[:tabnew +exe\ "tcd\ "\ .\ fnamemodify($MYVIMRC,\ ":p:h") $MYVIMRC<CR>]])
 
 -- smart home key
 -- keymap('n', '<Home>', [[col('.') == match(getline('.'),'\S')+1 ? '0' : '^']])
@@ -316,10 +306,10 @@ imap <silent> <Home> <C-O><Home>
 
 -- toggle wrap
 vim.o.wrap = false
-keymap('n', '<A-z>', [[<cmd>set wrap!<CR>]])
+map('n', '<A-z>', [[<cmd>set wrap!<CR>]])
 
 -- clear search highlight
-keymap('n', '<leader>l', '<cmd>noh<CR>')
+map('n', '<leader>l', '<cmd>noh<CR>')
 
 --Remap escape to leave terminal mode
 vim.api.nvim_exec([[
@@ -339,11 +329,18 @@ augroup end
 ]], false)
 
 -- Y yank until the end of line
-keymap('n', 'Y', 'y$', { noremap = true })
+map('n', 'Y', 'y$')
 
 -- Telescope
 require('telescope').setup { }
 
+do
+    local tsb = require 'telescope.builtin'
+    map('n', '<leader>ff', tsb.find_files)
+    map('n', '<leader>fg', tsb.live_grep)
+    map('n', '<leader>fb', tsb.buffers)
+    map('n', '<leader>fh', tsb.help_tags)
+end
 
 -- Neo-tree
 
@@ -444,14 +441,7 @@ neotree.setup({
         }
     }
 })
-keymap('n', '<C-b>', '<cmd>NeoTreeRevealToggle<cr>')
-
---Add leader shortcuts
-keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
-keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
-keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
-keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
-keymap('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>')
+map('n', '<C-b>', '<cmd>Neotree reveal toggle<cr>')
 
 -- dap settings
 local dap, dapui = require("dap"), require("dapui")
@@ -514,34 +504,46 @@ lsp_status.register_progress()
 local nvim_lsp = require('lspconfig')
 
 local on_attach = function(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     lsp_status.on_attach(client, bufnr)
     require'lsp_signature'.on_attach(client, bufnr)
-    buf_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-    buf_keymap(bufnr, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.document_highlight()<CR>')
-    buf_keymap(bufnr, 'n', '<leader>l', '<cmd>noh <bar> lua vim.lsp.buf.clear_references()<CR>')
-    buf_keymap(bufnr, 'n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-    buf_keymap(bufnr, 'v', 'ga', [[:lua vim.lsp.buf.range_code_action()<CR>]])
-    buf_keymap(bufnr, 'n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
-    buf_keymap(bufnr, 'n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-    buf_keymap(bufnr, 'n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 
-    buf_keymap(bufnr, 'n', 'gd', '<cmd>Telescope lsp_definitions<CR>')
-    buf_keymap(bufnr, 'n', 'gt', '<cmd>Telescope lsp_type_definitions<CR>')
-    buf_keymap(bufnr, 'n', 'gD', '<cmd>Telescope lsp_implementations<CR>')
-    buf_keymap(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-    buf_keymap(bufnr, 'n', 'gr', '<cmd>Telescope lsp_references<CR>')
-    buf_keymap(bufnr, 'n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<CR>')
-    buf_keymap(bufnr, 'n', '<leader>fw', '<cmd>Telescope lsp_workspace_symbols<CR>')
+    local opts = { buffer = bufnr }
 
-    buf_keymap(bufnr, 'n', '<leader>s', [[<cmd>lua print(require('nvim-gps').get_location())<CR>]])
+    map('n', 'K', vim.lsp.buf.hover, opts)
+    map('n', '<leader>k', vim.lsp.buf.document_highlight, opts)
+    map('n', '<leader>l', function()
+        vim.cmd('noh')
+        vim.lsp.buf.clear_references()
+    end, opts)
+    map('n', 'ga', vim.lsp.buf.code_action, opts)
+    map('v', 'ga', vim.lsp.buf.range_code_action, opts)
+    map('n', '<leader>r', vim.lsp.buf.rename, opts)
+    map('n', 'g[', vim.diagnostic.goto_prev, opts)
+    map('n', 'g]', vim.diagnostic.goto_next, opts)
 
-    vim.api.nvim_exec([[
-        augroup Lsp
-        autocmd!
-        autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
-        augroup end
-    ]], false)
+    local tsb = require 'telescope.builtin'
+    map('n', 'gd', tsb.lsp_definitions, opts)
+    map('n', 'gt', tsb.lsp_type_definitions, opts)
+    map('n', 'gD', tsb.lsp_implementations, opts)
+    map('n', '<c-k>', vim.lsp.buf.signature_help, opts)
+    map('n', 'gr', tsb.lsp_references, opts)
+    map('n', '<leader>fs', tsb.lsp_document_symbols, opts)
+    map('n', '<leader>fw', tsb.lsp_workspace_symbols, opts)
+
+    map('n', '<leader>s', function()
+        local loc = require('nvim-gps').get_location()
+        vim.api.nvim_echo({ { loc } }, false, {})
+    end, opts)
+
+    local lsp_group = augroup "Lsp"
+    -- Map :Format to vim.lsp.buf.formatting()
+    vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+    aucmd("BufWritePre", {
+        group = lsp_group,
+        buffer = bufnr,
+        callback = function() vim.lsp.buf.formatting_sync(nil, 1000) end
+    })
+
 end
 
 local capabilities = lsp_status.capabilities
@@ -549,8 +551,6 @@ nvim_lsp.util.default_config = vim.tbl_extend("keep", nvim_lsp.util.default_conf
 nvim_lsp.util.default_config .on_attach = on_attach
 
 -- Enable rust analyzer
-vim.api.nvim_exec([[autocmd BufRead Cargo.toml call crates#toggle()]], false)
-
 local extension_path = 'C:/Users/Rodrigo/AppData/Local/nvim/codelldb/extension/'
 local codelldb_path = extension_path .. 'adapter/codelldb'
 -- local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
@@ -657,9 +657,6 @@ nvim_lsp.sumneko_lua.setup {
         },
     },
 }
-
--- Map :Format to vim.lsp.buf.formatting()
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt="menuone,noselect"
