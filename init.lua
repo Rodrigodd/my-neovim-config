@@ -644,10 +644,8 @@ nvim_lsp.clangd.setup {
 }
 
 -- Enable sumneko\lua-language-server
-local sumneko_root_path = "D:/repos/lua-language-server"
-local sumneko_binary_path = "/bin/Windows/lua-language-server.exe" -- Change to your OS specific output folder
 nvim_lsp.sumneko_lua.setup {
-    cmd = {sumneko_root_path .. sumneko_binary_path, "-E", sumneko_root_path.."/main.lua" };
+    cmd = { vim.fn.stdpath('data') .. [[/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server.exe]] },
     -- on_attach = on_attach,
     settings = {
         Lua = {
