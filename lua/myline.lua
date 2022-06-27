@@ -66,8 +66,6 @@ local set_hl = function(group, options)
     vim.cmd(string.format('hi %s %s %s %s', group, bg, fg, gui))
 end
 
--- you can of course pick whatever colour you want, I picked these colours
--- because I use Gruvbox and I like them
 M.highlights = {
     { 'Mode', { bg = colors.green, fg = colors.bg, gui = "bold" } },
     { 'Filename', { bg = colors.section_bg, fg = colors.fg } },
@@ -79,9 +77,20 @@ M.highlights = {
     { 'CloseInactive', { bg = colors.bg, fg = colors.inactive_file } },
 }
 
-for _, highlight in ipairs(M.highlights) do
-    set_hl(highlight[1], highlight[2])
+local set_highlights = function()
+    for _, highlight in ipairs(M.highlights) do
+        set_hl(highlight[1], highlight[2])
+    end
 end
+
+local u = require('utils')
+
+local line_group = u.augroup('statusline');
+set_highlights()
+u.autocmd("ColorScheme", {
+    group = line_group,
+    callback = set_highlights,
+})
 
 M.separators = {
     arrow = { '', '' },
