@@ -162,7 +162,18 @@ require('packer').startup(function()
 
     -- rust plugins
     use 'cespare/vim-toml'
-    use 'mhinz/vim-crates'
+    use {
+        'saecki/crates.nvim',
+        event = { "BufRead Cargo.toml" },
+        requires = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('crates').setup()
+            aucmd("FileType toml", {
+                group = augroup 'creates.nvim',
+                callback = require('cmp').setup.buffer { sources = { { name = 'crates' } } }
+            })
+        end,
+    }
     use { 'simrat39/rust-tools.nvim', requires = 'mfussenegger/nvim-dap' }
 
     -- flutter plugins
