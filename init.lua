@@ -12,11 +12,10 @@ set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
 language en                 " sets the language of the messages / ui (vim)
 ]])
 
--- keymap util
-local map = vim.keymap.set
-local augroup = function(name, opts) vim.api.nvim_create_augroup(name, opts or {}) end
-local aucmd = vim.api.nvim_create_autocmd
-
+local utils = require 'utils'
+local map = utils.map
+local augroup = utils.augroup
+local aucmd = utils.autocmd
 
 -- Install packer
 local execute = vim.api.nvim_command
