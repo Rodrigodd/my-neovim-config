@@ -37,7 +37,7 @@ function M.status_line()
         table.insert(msgs, client_name .. ' ' .. contents)
     end
     local base_status = vim.trim(table.concat(msgs, ' '))
-    return base_status .. ' ' 
+    return base_status .. ' '
 end
 
 return M

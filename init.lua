@@ -23,7 +23,7 @@ local execute = vim.api.nvim_command
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+    execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
 vim.api.nvim_exec([[
@@ -35,25 +35,25 @@ vim.api.nvim_exec([[
 
 local use = require('packer').use
 require('packer').startup(function()
-    use 'wbthomason/packer.nvim'       -- Package manager
-    use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
+    use 'wbthomason/packer.nvim' -- Package manager
+    use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
     use {
-      'nmac427/guess-indent.nvim',
-      config = function() require('guess-indent').setup { auto_cmd = false } end,
+        'nmac427/guess-indent.nvim',
+        config = function() require('guess-indent').setup { auto_cmd = false } end,
     }
     use {
         'windwp/nvim-autopairs',
-        config = function ()
+        config = function()
             local npairs = require('nvim-autopairs');
-            npairs.setup{
+            npairs.setup {
                 disable_filetype = { "TelescopePrompt" },
-                disable_in_macro = false,  -- disable when recording or executing a macro
-                ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]],"%s+", ""),
+                disable_in_macro = false, -- disable when recording or executing a macro
+                ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
                 enable_moveright = true,
-                enable_afterquote = true,  -- add bracket pairs after quote
-                enable_check_bracket_line = true,  --- check bracket in same line
+                enable_afterquote = true, -- add bracket pairs after quote
+                enable_check_bracket_line = true, --- check bracket in same line
                 check_ts = true,
-                map_bs = true,  -- map the <BS> key
+                map_bs = true, -- map the <BS> key
                 map_c_w = false, -- map <c-w> to delete a pair if possible
                 fast_wrap = {
                     map = '<M-e>',
@@ -70,15 +70,15 @@ require('packer').startup(function()
     -- UI to select things (files, grep results, open buffers...)
     use {
         'nvim-telescope/telescope.nvim',
-        requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'}
+        requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' }
     }
     use 'marko-cerovac/material.nvim'
     use 'lukas-reineke/indent-blankline.nvim'
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = function ()
-            require'nvim-treesitter.configs'.setup {
+        config = function()
+            require 'nvim-treesitter.configs'.setup {
                 ensure_installed = {
                     "toml",
                     "rust",
@@ -98,7 +98,7 @@ require('packer').startup(function()
     use {
         "SmiteshP/nvim-gps",
         requires = "nvim-treesitter/nvim-treesitter",
-        config = function ()
+        config = function()
             require('nvim-gps').setup {
                 separator = ' > ',
             }
@@ -106,32 +106,32 @@ require('packer').startup(function()
     }
     use {
         'jandamm/cryoline.nvim',
-        config = function() require'myline' end,
+        config = function() require 'myline' end,
         requires = { 'kyazdani42/nvim-web-devicons' }
     }
     use {
         'lewis6991/gitsigns.nvim',
-        requires = {'nvim-lua/plenary.nvim'},
+        requires = { 'nvim-lua/plenary.nvim' },
         config = function()
-            require'gitsigns'.setup()
+            require 'gitsigns'.setup()
         end
     }
-    use 'neovim/nvim-lspconfig'        -- Collection of configurations for built-in LSP client
+    use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
     use {
         'simrat39/symbols-outline.nvim',
         opt = true,
     }
     use {
         'williamboman/nvim-lsp-installer',
-        requires = {'neovim/nvim-lspconfig'},
-        config = function ()
+        requires = { 'neovim/nvim-lspconfig' },
+        config = function()
         end
     }
     use 'nvim-lua/lsp-status.nvim'
     use 'ray-x/lsp_signature.nvim'
     use {
         'L3MON4D3/LuaSnip',
-        config = function ()
+        config = function()
             require("luasnip.loaders.from_vscode").load({
                 paths = './snippets'
             })
@@ -177,7 +177,7 @@ require('packer').startup(function()
 
     -- flutter plugins
     use 'dart-lang/dart-vim-plugin'
-    use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
+    use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
 
     -- java plugins
     use 'mfussenegger/nvim-jdtls'
@@ -207,18 +207,18 @@ vim.wo.number = true --Make line numbers default
 vim.o.hidden = true --Do not save when switching buffers
 vim.o.mouse = "a" --Enable mouse mode
 vim.o.breakindent = true --Enable break indent
-vim.cmd[[set undofile]] --Save undo history
+vim.cmd [[set undofile]] --Save undo history
 
-_G.set_indent = function ()
-    vim.o.tabstop = 4      -- number of visual spaces per TAB
-    vim.o.softtabstop = 4  -- number of spaces in tab when editing
-    vim.o.shiftwidth = 4   -- number of spaces to use for autoindent
+_G.set_indent = function()
+    vim.o.tabstop = 4 -- number of visual spaces per TAB
+    vim.o.softtabstop = 4 -- number of spaces in tab when editing
+    vim.o.shiftwidth = 4 -- number of spaces to use for autoindent
     vim.o.expandtab = true -- tabs are space
 end
 
-vim.o.tabstop = 4      -- number of visual spaces per TAB
-vim.o.softtabstop = 4  -- number of spaces in tab when editing
-vim.o.shiftwidth = 4   -- number of spaces to use for autoindent
+vim.o.tabstop = 4 -- number of visual spaces per TAB
+vim.o.softtabstop = 4 -- number of spaces in tab when editing
+vim.o.shiftwidth = 4 -- number of spaces to use for autoindent
 vim.o.expandtab = true -- tabs are space
 
 vim.api.nvim_exec([[filetype off]], false)
@@ -228,7 +228,7 @@ vim.g.splitbelow = true
 
 --Decrease update time
 vim.o.updatetime = 300
-vim.wo.signcolumn="yes"
+vim.wo.signcolumn = "yes"
 
 --Set colorscheme
 vim.o.termguicolors = true
@@ -236,14 +236,14 @@ vim.g.material_style = "deep ocean"
 vim.g.neovide_transparency = 0.8
 require('material').setup({
     contrast = {
-		sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-		floating_windows = true, -- Enable contrast for floating windows
-		line_numbers = false, -- Enable contrast background for line numbers
-		sign_column = false, -- Enable contrast background for the sign column
-		cursor_line = false, -- Enable darker background for the cursor line
-		non_current_windows = false, -- Enable darker background for non-current windows
-		popup_menu = false, -- Enable lighter background for the popup menu
-	},
+        sidebars = false, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+        floating_windows = true, -- Enable contrast for floating windows
+        line_numbers = false, -- Enable contrast background for line numbers
+        sign_column = false, -- Enable contrast background for the sign column
+        cursor_line = false, -- Enable darker background for the cursor line
+        non_current_windows = false, -- Enable darker background for non-current windows
+        popup_menu = false, -- Enable lighter background for the popup menu
+    },
     borders = false,
     italics = {
         comments = false,
@@ -268,18 +268,18 @@ require('material').setup({
     },
     custom_highlights = {}
 })
-vim.cmd[[colorscheme material]]
+vim.cmd [[colorscheme material]]
 
 vim.o.guifont = [[CaskaydiaCove NF:h9]]
 
 --Remap space as leader key
-map('', '<Space>', '<Nop>', { silent=true })
+map('', '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 --Remap for dealing with word wrap
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true})
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true})
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- disable arrows
 map('n', '<Up>', '<Nop>')
@@ -342,7 +342,7 @@ augroup end
 map('n', 'Y', 'y$')
 
 -- Telescope
-require('telescope').setup { }
+require('telescope').setup {}
 
 do
     local tsb = require 'telescope.builtin'
@@ -430,23 +430,23 @@ neotree.setup({
             position = "float",
             mappings = {
                 ["<2-LeftMouse>"] = "open",
-                ["o"] = "open",
-                ["S"] = "open_split",
-                ["s"] = "open_vsplit",
-                ["C"] = "close_node",
-                ["R"] = "refresh",
-                ["d"] = "delete",
-                ["r"] = "rename",
-                ["c"] = "copy_to_clipboard",
-                ["x"] = "cut_to_clipboard",
-                ["p"] = "paste_from_clipboard",
-                ["A"]  = "git_add_all",
-                ["gu"] = "git_unstage_file",
-                ["ga"] = "git_add_file",
-                ["gr"] = "git_revert_file",
-                ["gc"] = "git_commit",
-                ["gp"] = "git_push",
-                ["gg"] = "git_commit_and_push",
+                ["o"]             = "open",
+                ["S"]             = "open_split",
+                ["s"]             = "open_vsplit",
+                ["C"]             = "close_node",
+                ["R"]             = "refresh",
+                ["d"]             = "delete",
+                ["r"]             = "rename",
+                ["c"]             = "copy_to_clipboard",
+                ["x"]             = "cut_to_clipboard",
+                ["p"]             = "paste_from_clipboard",
+                ["A"]             = "git_add_all",
+                ["gu"]            = "git_unstage_file",
+                ["ga"]            = "git_add_file",
+                ["gr"]            = "git_revert_file",
+                ["gc"]            = "git_commit",
+                ["gp"]            = "git_push",
+                ["gg"]            = "git_commit_and_push",
             }
         }
     }
@@ -456,13 +456,13 @@ map('n', '<C-b>', '<cmd>Neotree reveal toggle<cr>')
 -- dap settings
 local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
+    dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
+    dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
+    dapui.close()
 end
 
 require("dapui").setup({
@@ -515,7 +515,7 @@ local nvim_lsp = require('lspconfig')
 
 local on_attach = function(client, bufnr)
     lsp_status.on_attach(client, bufnr)
-    require'lsp_signature'.on_attach(client, bufnr)
+    require 'lsp_signature'.on_attach(client, bufnr)
 
     local opts = { buffer = bufnr }
 
@@ -558,7 +558,7 @@ end
 
 local capabilities = lsp_status.capabilities
 nvim_lsp.util.default_config = vim.tbl_extend("keep", nvim_lsp.util.default_config, { capabilities = capabilities })
-nvim_lsp.util.default_config .on_attach = on_attach
+nvim_lsp.util.default_config.on_attach = on_attach
 
 -- Enable rust analyzer
 local extension_path = 'C:/Users/Rodrigo/AppData/Local/nvim/codelldb/extension/'
@@ -573,11 +573,11 @@ require('rust-tools').setup {
         reload_workspace_from_cargo_toml = false,
     },
     server = {
-        cmd = {vim.fn.stdpath('data')..[[/lsp_servers/rust/rust-analyzer]]},
+        cmd = { vim.fn.stdpath('data') .. [[/lsp_servers/rust/rust-analyzer]] },
         -- on_attach = on_attach,
         standalone = false,
         single_file_support = false,
-        root_dir = function (fname, bufnr)
+        root_dir = function(fname, bufnr)
             if fname:match('.cargo/registry') then
                 return nil
             end
@@ -626,11 +626,12 @@ nvim_lsp.taplo.setup {
 vim.g.dart_style_guide = 2
 require('flutter-tools').setup {
     lsp = {
-        capabilities = function (config)
+        capabilities = function(config)
             return vim.tbl_extend('keep', config or {}, capabilities)
         end,
         -- on_attach = on_attach,
-        cmd = { "D:/flutter/bin/dart.bat", "D:/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot", "--lsp" }
+        cmd = { "D:/flutter/bin/dart.bat", "D:/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot",
+            "--lsp" }
     }
 }
 
@@ -654,7 +655,7 @@ nvim_lsp.sumneko_lua.setup {
                 path = vim.split(package.path, ';'),
             },
             diagnostics = {
-                globals = {'vim'},
+                globals = { 'vim' },
             },
             workspace = {
                 library = {
@@ -667,11 +668,11 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt="menuone,noselect"
+vim.o.completeopt = "menuone,noselect"
 
 -- Setup nvim-cmp
 
-local cmp = require'cmp'
+local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
 cmp.setup {
@@ -714,4 +715,4 @@ cmp.setup {
 
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
