@@ -56,7 +56,10 @@ require('packer').startup(function()
     -- UI to select things (files, grep results, open buffers...)
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' }
+        requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' },
+        config = function()
+            require('telescope')
+        end,
     }
     use 'marko-cerovac/material.nvim'
     use 'lukas-reineke/indent-blankline.nvim'

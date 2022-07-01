@@ -25,17 +25,6 @@ require('plugins')
 require('options')
 require('mappings')
 
--- Telescope
-require('telescope').setup {}
-
-do
-    local tsb = require 'telescope.builtin'
-    map('n', '<leader>ff', tsb.find_files)
-    map('n', '<leader>fg', tsb.live_grep)
-    map('n', '<leader>fb', tsb.buffers)
-    map('n', '<leader>fh', tsb.help_tags)
-end
-
 -- Neo-tree
 
 local neotree = require("neo-tree")
@@ -329,6 +318,10 @@ nvim_lsp.clangd.setup {
 }
 
 -- Enable sumneko\lua-language-server
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
 nvim_lsp.sumneko_lua.setup {
     cmd = { vim.fn.stdpath('data') .. [[/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server.exe]] },
     -- on_attach = on_attach,
