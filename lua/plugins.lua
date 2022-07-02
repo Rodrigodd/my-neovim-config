@@ -25,7 +25,9 @@ require('packer').startup(function()
     use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
     use {
         'nmac427/guess-indent.nvim',
-        config = function() require('guess-indent').setup { auto_cmd = false } end,
+        config = function()
+            require('guess-indent').setup { auto_cmd = false }
+        end,
     }
     use {
         'windwp/nvim-autopairs',
@@ -58,7 +60,7 @@ require('packer').startup(function()
         'nvim-telescope/telescope.nvim',
         requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' },
         config = function()
-            require('telescope')
+            require('plugins.telescope')
         end,
     }
     use 'marko-cerovac/material.nvim'
@@ -112,8 +114,12 @@ require('packer').startup(function()
     }
     use {
         'williamboman/nvim-lsp-installer',
-        requires = { 'neovim/nvim-lspconfig' },
+        requires = {
+            'neovim/nvim-lspconfig',
+            'nvim-telescope/telescope.nvim',
+        },
         config = function()
+            require('plugins.lsp')
         end
     }
     use 'nvim-lua/lsp-status.nvim'
@@ -132,7 +138,11 @@ require('packer').startup(function()
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-path',
             'saadparwaiz1/cmp_luasnip',
-        }
+            -- 'L3MON4D3/LuaSnip'
+        },
+        config = function()
+            require('plugins.nvimcmp')
+        end
     }
     use {
         "nvim-neo-tree/neo-tree.nvim",
@@ -142,11 +152,20 @@ require('packer').startup(function()
             "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim"
         },
+        config = function()
+            require('plugins.neotree')
+        end
     }
 
     -- dap
     use { "mfussenegger/nvim-dap" }
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use {
+        "rcarriga/nvim-dap-ui",
+        requires = { "mfussenegger/nvim-dap" },
+        config = function()
+            require('plugins.dap-ui')
+        end
+    }
 
     -- rust plugins
     use 'cespare/vim-toml'
@@ -162,7 +181,16 @@ require('packer').startup(function()
             })
         end,
     }
-    use { 'simrat39/rust-tools.nvim', requires = 'mfussenegger/nvim-dap' }
+    use {
+        'simrat39/rust-tools.nvim',
+        requires = {
+            'mfussenegger/nvim-dap',
+            'neovim/nvim-lspconfig'
+        },
+        config = function()
+            require('plugins.rust')
+        end
+    }
 
     -- flutter plugins
     use 'dart-lang/dart-vim-plugin'
