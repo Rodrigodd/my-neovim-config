@@ -2,7 +2,7 @@ local M = {}
 
 local messages = require('lsp-status/messaging').messages
 
-function M.status_line()
+function M.status_line(bufnr)
     bufnr = bufnr or 0
     if #vim.lsp.buf_get_clients(bufnr) == 0 then return 'no clients' end
     local buf_messages = messages()

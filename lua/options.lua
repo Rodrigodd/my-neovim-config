@@ -18,7 +18,6 @@ vim.o.incsearch = true
 vim.o.cursorline = true -- Highlight line
 vim.o.scrolloff = 2
 vim.o.inccommand = "split" --Incremental live completion
-vim.wo.number = true
 vim.o.hidden = true --Do not save when switching buffers
 vim.o.mouse = "a" --Enable mouse mode
 vim.o.breakindent = true --Enable break indent
@@ -35,6 +34,35 @@ vim.g.splitbelow = true
 vim.wo.signcolumn = "yes"
 --Decrease update time
 vim.o.updatetime = 500
+
+-- Relative line
+
+vim.wo.number = true
+local group = vim.api.nvim_create_augroup("ConfigRelativeLine", { clear = true })
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+    pattern = "*",
+    command = [[if &nu && mode() != "i" | set rnu   | endif]],
+    group = group,
+})
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+    pattern = "*",
+    command = [[if &nu | set nornu | endif]],
+    group = group,
+})
+
+-- Diagnostics
+
+vim.diagnostic.config({
+    log_level = true,
+    underline = true,
+    signs = true,
+    virtual_text = true,
+    virtual_lines = false,
+    float = {
+        source = "if_many",
+        show_header = true,
+    }
+})
 
 
 -- Set colorscheme

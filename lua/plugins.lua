@@ -11,18 +11,19 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
-vim.api.nvim_exec([[
-    augroup Packer
-        autocmd!
-        autocmd BufWritePost plugins.lua PackerCompile
-    augroup end
-]], false)
+local group = vim.api.nvim_create_augroup("Packer", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = "plugins.lua",
+    command = [[echo "packer source" | source <afile> | PackerCompile]],
+    group = group,
+})
 
 local use = require('packer').use
-require('packer').startup(function()
+require('packer').startup({ function()
     use 'wbthomason/packer.nvim' -- Package manager
     use 'nvim-lua/plenary.nvim'
     use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
+    use 'andrewradev/splitjoin.vim' -- gS to split, gJ to join
     use {
         'nmac427/guess-indent.nvim',
         config = function()
@@ -58,7 +59,11 @@ require('packer').startup(function()
     -- UI to select things (files, grep results, open buffers...)
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' },
+        requires = {
+            'nvim-lua/popup.nvim',
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-ui-select.nvim'
+        },
         config = function()
             require('plugins.telescope')
         end,
@@ -67,23 +72,13 @@ require('packer').startup(function()
     use 'lukas-reineke/indent-blankline.nvim'
     use {
         'nvim-treesitter/nvim-treesitter',
+        requires = {
+            'nvim-treesitter/playground',
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
         run = ':TSUpdate',
         config = function()
-            require 'nvim-treesitter.configs'.setup {
-                ensure_installed = {
-                    "toml",
-                    "rust",
-                    "c",
-                },
-                highlight = {
-                    enable = true,
-                    disable = {},
-                },
-                indent = {
-                    enable = false,
-                    disable = {},
-                },
-            }
+            require 'plugins.treesitter'
         end
     }
     use {
@@ -93,12 +88,17 @@ require('packer').startup(function()
             require('nvim-gps').setup {
                 separator = ' > ',
             }
+            vim.keymap.set('n', '<leader>s', function()
+                local path = vim.api.nvim_buf_get_name(0) .. ': '
+                local loc = require('nvim-gps').get_location()
+                vim.api.nvim_echo({ { path, 'Comment' }, { loc } }, false, {})
+            end, {})
         end
     }
     use {
         'jandamm/cryoline.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = function() require 'myline' end,
-        requires = { 'kyazdani42/nvim-web-devicons' }
     }
     use {
         'lewis6991/gitsigns.nvim',
@@ -107,29 +107,57 @@ require('packer').startup(function()
             require 'gitsigns'.setup()
         end
     }
-    use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
     use {
         'simrat39/symbols-outline.nvim',
         opt = true,
     }
     use {
-        'williamboman/nvim-lsp-installer',
+        'MunifTanjim/exrc.nvim',
+        config = function()
+            vim.o.exrc = false
+            require("exrc").setup({
+                files = {
+                    ".nvimrc.lua",
+                },
+            })
+        end
+    }
+    use({
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        as = "lsp_lines",
+        config = function()
+            vim.keymap.set(
+                "n", "<leader>j",
+                function()
+                    vim.diagnostic.config({
+                        virtual_text = not require('lsp_lines').toggle()
+                    })
+                end,
+                { desc = "Toggle lsp_lines" }
+            )
+            require("lsp_lines").setup()
+        end,
+    })
+    use {
+        'williamboman/mason.nvim',
         requires = {
+            'williamboman/mason-lspconfig.nvim',
+            'nvim-lua/lsp-status.nvim',
+            'neovim/nvim-lspconfig',
+            'ray-x/lsp_signature.nvim',
+
             'neovim/nvim-lspconfig',
             'nvim-telescope/telescope.nvim',
+            'folke/lua-dev.nvim',
         },
         config = function()
             require('plugins.lsp')
         end
     }
-    use 'nvim-lua/lsp-status.nvim'
-    use 'ray-x/lsp_signature.nvim'
     use {
         'L3MON4D3/LuaSnip',
         config = function()
-            require("luasnip.loaders.from_vscode").load({
-                paths = './snippets'
-            })
+            require('plugins.snips')
         end
     }
     use {
@@ -169,6 +197,7 @@ require('packer').startup(function()
 
     -- rust plugins
     use 'cespare/vim-toml'
+    use 'ron-rs/ron.vim'
     use {
         'saecki/crates.nvim',
         event = { "BufRead Cargo.toml" },
@@ -176,7 +205,7 @@ require('packer').startup(function()
         config = function()
             require('crates').setup()
             aucmd("FileType toml", {
-                group = augroup 'creates.nvim',
+                group = augroup 'CreatesNvim',
                 callback = require('cmp').setup.buffer { sources = { { name = 'crates' } } }
             })
         end,
@@ -187,6 +216,7 @@ require('packer').startup(function()
             'mfussenegger/nvim-dap',
             'neovim/nvim-lspconfig'
         },
+        after = 'mason.nvim',
         config = function()
             require('plugins.rust')
         end
@@ -198,4 +228,10 @@ require('packer').startup(function()
 
     -- java plugins
     use 'mfussenegger/nvim-jdtls'
-end)
+end,
+    config = {
+        profile = {
+            enable = true,
+            threshold = 1 -- the amount in ms that a plugins load time must be over for it to be included in the profile
+        }
+    } })

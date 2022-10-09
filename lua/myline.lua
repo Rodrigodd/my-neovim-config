@@ -85,7 +85,7 @@ end
 
 local u = require('utils')
 
-local line_group = u.augroup('statusline');
+local line_group = u.augroup('StatusLine');
 set_highlights()
 u.autocmd("ColorScheme", {
     group = line_group,
@@ -163,7 +163,8 @@ M.get_git_status = function(self)
             self.colors.git_add, ' +', signs.added,
             self.colors.git_change, ' ~', signs.changed,
             self.colors.git_delete, ' -', signs.removed,
-            self.colors.middle, '   ', signs.head, ' ' } or ''
+            self.colors.middle, '   ', signs.head, ' '
+        } or ''
 end
 
 M.get_filename = function(self)
