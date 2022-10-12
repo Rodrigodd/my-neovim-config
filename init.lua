@@ -16,6 +16,8 @@ language en                 " sets the language of the messages / ui (vim)
 -- local profiler = require 'plenary.profile'
 -- profiler.start('profile.txt', { flame = true })
 
+require('impatient')
+
 require('plugins')
 require('options')
 require('mappings')

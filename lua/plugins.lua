@@ -20,6 +20,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 local use = require('packer').use
 require('packer').startup({ function()
+    use 'lewis6991/impatient.nvim'
     use 'wbthomason/packer.nvim' -- Package manager
     use 'nvim-lua/plenary.nvim'
     use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
