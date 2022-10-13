@@ -16,7 +16,10 @@ language en                 " sets the language of the messages / ui (vim)
 -- local profiler = require 'plenary.profile'
 -- profiler.start('profile.txt', { flame = true })
 
-require('impatient')
+local status_ok, mod = pcall(require, 'impatient')
+if not status_ok then
+    vim.notify("impatient.nvim is not installed")
+end
 
 require('plugins')
 require('options')
