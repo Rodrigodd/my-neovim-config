@@ -11,7 +11,7 @@ require('rust-tools').setup {
         reload_workspace_from_cargo_toml = false,
     },
     server = {
-        cmd = { "rust-analyzer.cmd" },
+        cmd = { "rust-analyzer" },
         on_attach = require('lspconfig.util').default_config.on_attach,
         standalone = false,
         root_dir = function(fname)
