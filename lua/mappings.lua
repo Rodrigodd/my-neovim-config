@@ -71,3 +71,7 @@ map('n', 'Y', 'y$')
 -- Toggle spellcheck
 vim.keymap.set('n', '<C-F11>', ':set spell!<CR>')
 vim.keymap.set('i', '<C-F11>', '<C-O>:set spell!<CR>')
+
+-- diagnostics
+map('n', 'g[', vim.diagnostic.goto_prev)
+map('n', 'g]', vim.diagnostic.goto_next)

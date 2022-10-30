@@ -27,8 +27,6 @@ local on_attach = function(client, bufnr)
     end, opts)
     map({ 'n', 'v' }, 'ga', vim.lsp.buf.code_action, opts)
     map('n', '<leader>r', vim.lsp.buf.rename, opts)
-    map('n', 'g[', vim.diagnostic.goto_prev, opts)
-    map('n', 'g]', vim.diagnostic.goto_next, opts)
 
     local tsb = require 'telescope.builtin'
     map('n', 'gd', tsb.lsp_definitions, opts)
