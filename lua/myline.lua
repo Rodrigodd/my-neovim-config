@@ -44,15 +44,15 @@ M.colors = {
     line_col       = '%#LineCol#',
     line_col_alt   = '%#LineColAlt#',
     middle         = '%#MiddleBar#',
-    error          = '%#LspDiagnosticsSignError#',
-    warn           = '%#LspDiagnosticsSignWarning#',
-    info           = '%#LspDiagnosticsSignInformation#',
-    hint           = '%#LspDiagnosticsSignHint#',
+    error          = '%#DiagnosticError#',
+    warn           = '%#DiagnosticWarn#',
+    info           = '%#DiagnosticInfo#',
+    hint           = '%#DiagnosticHint#',
     git_add        = '%#GitSignsAdd#',
     git_change     = '%#GitSignsChange#',
     git_delete     = '%#GitSignsDelete#',
 }
-local colors = require('material.colors')
+local colors = require('material.colors').main
 -- colors.bg = '#141822'
 colors.bg = '#0f111a'
 colors.section_bg = '#1e2234'
@@ -69,8 +69,8 @@ end
 M.highlights = {
     { 'Mode', { bg = colors.green, fg = colors.bg, gui = "bold" } },
     { 'Filename', { bg = colors.section_bg, fg = colors.fg } },
-    { 'CloseSection', { bg = colors.bg, fg = colors.section_bg } },
-    { 'MiddleBar', { bg = colors.bg, fg = colors.middlegrey } },
+    { 'CloseSection', { bg = 'NONE', fg = colors.section_bg } },
+    { 'MiddleBar', { bg = 'NONE', fg = colors.gray } },
 
     { 'OpenInactive', { bg = colors.inactive_file, fg = colors.bg } },
     { 'FileInactive', { bg = colors.inactive_file, fg = colors.fg } },
@@ -246,7 +246,7 @@ M.set_active = function(self)
     local filename = colors.filename .. self:get_filename()
     local close_section = colors.close_section .. self.separators.angle[1]
 
-    local diagnostics = self:get_diagnostic()
+    local diagnostics = colors.middle .. self:get_diagnostic()
     local status = colors.middle .. self:get_lsp_status()
 
     local git = self:get_git_status()
