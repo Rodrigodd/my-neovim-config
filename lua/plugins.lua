@@ -201,13 +201,20 @@ require('packer').startup({ function()
     use 'ron-rs/ron.vim'
     use {
         'saecki/crates.nvim',
+        tag = 'v0.3.0',
         event = { "BufRead Cargo.toml" },
         requires = { 'nvim-lua/plenary.nvim' },
+        after = 'nvim-cmp',
         config = function()
             require('crates').setup()
-            aucmd("FileType toml", {
-                group = augroup 'CreatesNvim',
-                callback = require('cmp').setup.buffer { sources = { { name = 'crates' } } }
+            vim.api.nvim_create_autocmd("BufRead", {
+                group = vim.api.nvim_create_augroup('CmpSourceCargo', { clear = true }),
+                pattern = "Cargo.toml",
+                callback = function()
+                    require('cmp').setup.buffer {
+                        sources = { { name = 'crates' } }
+                    }
+                end
             })
         end,
     }
