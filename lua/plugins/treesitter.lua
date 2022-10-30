@@ -50,5 +50,13 @@ require 'nvim-treesitter.configs'.setup {
                 ["<leader>A"] = "@parameter.inner",
             },
         },
-    }
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            node_incremental = "<CR>",
+            scope_incremental = "grc",
+            node_decremental = "<BS>",
+        },
+    },
 }
