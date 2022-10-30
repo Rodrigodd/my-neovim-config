@@ -12,10 +12,6 @@ set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
 language en                 " sets the language of the messages / ui (vim)
 ]])
 
--- package.path = package.path .. [[;D:\repos\luajit\src\?.lua]]
--- local profiler = require 'plenary.profile'
--- profiler.start('profile.txt', { flame = true })
-
 local status_ok, mod = pcall(require, 'impatient')
 if not status_ok then
     vim.notify("impatient.nvim is not installed")
@@ -24,5 +20,3 @@ end
 require('plugins')
 require('options')
 require('mappings')
-
--- profiler.stop()
