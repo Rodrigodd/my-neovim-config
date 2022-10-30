@@ -37,6 +37,8 @@ require 'nvim-treesitter.configs'.setup {
             keymaps = {
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
+                ["at"] = "@parameter.outer",
+                ["it"] = "@parameter.inner",
             },
             selection_modes = {},
             include_surrounding_whitespace = true,
