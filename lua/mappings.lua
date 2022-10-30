@@ -69,5 +69,5 @@ augroup end
 map('n', 'Y', 'y$')
 
 -- Toggle spellcheck
-vim.keymap.set('n', '<F11>', ':set spell!<CR>')
-vim.keymap.set('i', '<F11>', '<C-O>:set spell!<CR>')
+vim.keymap.set('n', '<C-F11>', ':set spell!<CR>')
+vim.keymap.set('i', '<C-F11>', '<C-O>:set spell!<CR>')
