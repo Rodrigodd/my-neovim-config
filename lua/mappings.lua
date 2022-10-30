@@ -27,17 +27,6 @@ map('n', '<A-j>', [[<C-w>j]])
 map('n', '<A-k>', [[<C-w>k]])
 map('n', '<A-l>', [[<C-w>l]])
 
-local term_group = vim.api.nvim_create_augroup("ConfigTerminal", { clear = true })
-utils.autocmd("WinEnter", {
-    group = term_group,
-    pattern = "term://*",
-    command = 'startinsert'
-})
-utils.autocmd("TermOpen", {
-    group = term_group,
-    command = 'set nonumber signcolumn=no | startinsert'
-})
-
 -- move beetwen tabs
 map('t', '<A-H>', [[<C-\><C-n>gT]])
 map('t', '<A-L>', [[<C-\><C-n>gt]])

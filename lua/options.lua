@@ -39,16 +39,35 @@ vim.o.updatetime = 500
 
 vim.wo.number = true
 local group = vim.api.nvim_create_augroup("ConfigRelativeLine", { clear = true })
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+vim.api.nvim_create_autocmd({ 'TermLeave' }, {
     pattern = "*",
-    command = [[if &nu && mode() != "i" | set rnu   | endif]],
+    command = [[set nu]],
     group = group,
 })
-vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter', 'TermLeave' }, {
     pattern = "*",
-    command = [[if &nu | set nornu | endif]],
+    command = [[if &nu && mode() != "i" | set rnu | endif]],
     group = group,
 })
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'TermEnter', 'WinLeave' }, {
+    pattern = "*",
+    command = [[if &nu | set nornu | endif | if mode() == "t" | set nonumber | endif]],
+    group = group,
+})
+
+-- Terminal config
+
+local term_group = vim.api.nvim_create_augroup("ConfigTerminal", { clear = true })
+vim.api.nvim_create_autocmd("WinEnter", {
+    group = term_group,
+    pattern = "term://*",
+    command = 'startinsert'
+})
+vim.api.nvim_create_autocmd("TermOpen", {
+    group = term_group,
+    command = 'set signcolumn=no | startinsert'
+})
+
 
 -- Diagnostics
 
