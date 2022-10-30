@@ -8,14 +8,18 @@ require("mason-lspconfig").setup {
     ensure_installed = {},
 }
 
+local nvim_lsp = require('lspconfig')
 local lsp_status = require('lsp-status')
 lsp_status.register_progress()
-local nvim_lsp = require('lspconfig')
+
 
 local on_attach = function(client, bufnr)
     print("on attach " .. bufnr)
     lsp_status.on_attach(client, bufnr)
     require 'lsp_signature'.on_attach(client, bufnr)
+    if client.server_capabilities.documentSymbolProvider then
+        require 'nvim-navic'.attach(client, bufnr)
+    end
 
     local opts = { buffer = bufnr }
 

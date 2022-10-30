@@ -84,16 +84,10 @@ require('packer').startup({ function()
     }
     use {
         "SmiteshP/nvim-gps",
-        requires = "nvim-treesitter/nvim-treesitter",
+        requires = { "nvim-treesitter/nvim-treesitter" },
+        after = 'nvim-navic',
         config = function()
-            require('nvim-gps').setup {
-                separator = ' > ',
-            }
-            vim.keymap.set('n', '<leader>s', function()
-                local path = vim.api.nvim_buf_get_name(0) .. ': '
-                local loc = require('nvim-gps').get_location()
-                vim.api.nvim_echo({ { path, 'Comment' }, { loc } }, false, {})
-            end, {})
+            require 'plugins.navic'
         end
     }
     use {
@@ -149,8 +143,9 @@ require('packer').startup({ function()
 
             'neovim/nvim-lspconfig',
             'nvim-telescope/telescope.nvim',
-            'folke/lua-dev.nvim',
+            'SmiteshP/nvim-navic',
         },
+        after = 'nvim-navic',
         config = function()
             require('plugins.lsp')
         end
