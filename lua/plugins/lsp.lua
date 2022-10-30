@@ -44,7 +44,7 @@ local on_attach = function(client, bufnr)
     autocmd("BufWritePre", {
         group = lsp_group,
         buffer = bufnr,
-        callback = function() vim.lsp.buf.format({timeout_ms = 1000}) end
+        callback = function() vim.lsp.buf.format({ timeout_ms = 1000 }) end
     })
 
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
