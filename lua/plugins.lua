@@ -66,6 +66,13 @@ require('packer').startup({ function()
             -- }
         end
     }
+    use {
+        'ggandor/leap.nvim',
+        config = function()
+            require 'leap'.add_default_mappings()
+            -- require 'leap'.init_highlight(true)
+        end
+    }
     -- UI to select things (files, grep results, open buffers...)
     use {
         'nvim-telescope/telescope.nvim',
