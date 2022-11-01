@@ -40,7 +40,6 @@ local on_attach = function(client, bufnr)
     map('n', 'gr', tsb.lsp_references, opts)
     map('n', '<leader>fs', tsb.lsp_document_symbols, opts)
     map('n', '<leader>fw', tsb.lsp_dynamic_workspace_symbols, opts)
-    map('n', '<leader>fd', tsb.diagnostics, opts)
 
     if client.server_capabilities.documentFormattingProvider then
         local lsp_group = augroup("Lsp", { clear = false })
