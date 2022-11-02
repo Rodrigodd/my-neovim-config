@@ -111,6 +111,7 @@ nvim_lsp.sumneko_lua.setup {
     },
 }
 
+require 'plugins.lsp.rust'
 local mod = {}
 
 ---@param server_name string

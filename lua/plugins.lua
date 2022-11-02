@@ -150,6 +150,14 @@ require('packer').startup({ function()
         end,
     })
     use {
+        'simrat39/rust-tools.nvim',
+        requires = {
+            'mfussenegger/nvim-dap',
+            'neovim/nvim-lspconfig'
+        },
+        before = 'mason.nvim',
+    }
+    use {
         'williamboman/mason.nvim',
         requires = {
             'williamboman/mason-lspconfig.nvim',
@@ -228,17 +236,6 @@ require('packer').startup({ function()
                 end
             })
         end,
-    }
-    use {
-        'simrat39/rust-tools.nvim',
-        requires = {
-            'mfussenegger/nvim-dap',
-            'neovim/nvim-lspconfig'
-        },
-        after = 'mason.nvim',
-        config = function()
-            require('plugins.rust')
-        end
     }
 
     -- flutter plugins
