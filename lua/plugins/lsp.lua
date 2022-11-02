@@ -42,16 +42,18 @@ local on_attach = function(client, bufnr)
     map('n', '<leader>fw', tsb.lsp_dynamic_workspace_symbols, opts)
     map('n', '<leader>fd', tsb.diagnostics, opts)
 
-    local lsp_group = augroup("Lsp", { clear = false })
-    -- Map :Format to vim.lsp.buf.format()
-    vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format({async=true})' ]])
-    autocmd("BufWritePre", {
-        group = lsp_group,
-        buffer = bufnr,
-        callback = function() vim.lsp.buf.format({ timeout_ms = 1000 }) end
-    })
+    if client.server_capabilities.documentFormattingProvider then
+        local lsp_group = augroup("Lsp", { clear = false })
+        -- Map :Format to vim.lsp.buf.format()
+        vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format({async=true})' ]])
+        autocmd("BufWritePre", {
+            group = lsp_group,
+            buffer = bufnr,
+            callback = function() vim.lsp.buf.format({ timeout_ms = 1000 }) end
+        })
+        vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+    end
 
-    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
 end
