@@ -23,6 +23,8 @@ vim.o.mouse = "a" --Enable mouse mode
 vim.o.breakindent = true --Enable break indent
 vim.cmd [[set undofile]] --Save undo history
 
+vim.o.colorcolumn = '+1' -- colorcolumn at end of textwidth
+
 vim.o.tabstop = 4 -- number of visual spaces per TAB
 vim.o.softtabstop = 4 -- number of spaces in tab when editing
 vim.o.shiftwidth = 4 -- number of spaces to use for autoindent
