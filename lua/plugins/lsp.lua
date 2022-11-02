@@ -112,6 +112,9 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 require 'plugins.lsp.rust'
+require 'plugins.lsp.ltex'
+
+
 local mod = {}
 
 ---@param server_name string

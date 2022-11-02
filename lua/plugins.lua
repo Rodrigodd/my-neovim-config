@@ -158,6 +158,10 @@ require('packer').startup({ function()
         before = 'mason.nvim',
     }
     use {
+        "barreiroleo/ltex-extra.nvim",
+        before = 'mason.nvim'
+    }
+    use {
         'williamboman/mason.nvim',
         requires = {
             'williamboman/mason-lspconfig.nvim',
