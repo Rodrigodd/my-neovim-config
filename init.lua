@@ -1,8 +1,5 @@
 -- TODO:
 -- - look at how broke is luasnip
--- - add shortcut to expand the file name path
--- - change filename bg color if there are unsaved buffers
--- - keymap to print breadcrumbs
 -- - contribute to gitui with a restore button in log [2] tab
 -- - contribute to rust-analyzer with a 'inline import rename'
 
