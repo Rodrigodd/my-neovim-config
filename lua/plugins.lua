@@ -24,7 +24,17 @@ require('packer').startup({ function()
     use 'wbthomason/packer.nvim' -- Package manager
     use 'nvim-lua/plenary.nvim'
     use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
-    use 'andrewradev/splitjoin.vim' -- gS to split, gJ to join
+    use {
+        'Wansmer/treesj',
+        requires = { 'nvim-treesitter' },
+        config = function()
+            require('treesj').setup({
+                use_default_keymaps = false,
+            })
+            vim.keymap.set("n", "gS", "<cmd>TSJSplit<CR>", { desc = "Split syntax node in multiple lines" })
+            vim.keymap.set("n", "gJ", "<cmd>TSJJoin<CR>", { desc = "Joint syntax node in a single lines" })
+        end,
+    }
     use {
         'nmac427/guess-indent.nvim',
         config = function()
