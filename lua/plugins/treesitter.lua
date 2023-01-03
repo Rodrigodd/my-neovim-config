@@ -5,6 +5,7 @@ require 'nvim-treesitter.configs'.setup {
         "lua",
         "markdown",
         "c",
+        "vim",
     },
     highlight = {
         enable = true,
