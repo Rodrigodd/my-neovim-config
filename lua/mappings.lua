@@ -6,6 +6,9 @@ map('', '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Remove man page mapping (it only freezes the editor for a while, and return a error at end)
+map({ 'n', 'v' }, 'K', '<Nop>')
+
 --Remap for dealing with word wrap
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
