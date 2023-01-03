@@ -44,6 +44,7 @@ require('rust-tools').setup {
                     command = "clippy",
                 },
                 procMacro = { enable = true },
+                inlayHints = { locationLinks = false },
                 -- trace = { server = "verbose" },
                 -- diagnostics = {
                 --     enableExperimental = true,
