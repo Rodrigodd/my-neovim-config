@@ -23,8 +23,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require('mappings')
+
 local plugins = require('plugins')
 require("lazy").setup(plugins)
 
 require('options')
-require('mappings')
