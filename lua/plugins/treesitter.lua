@@ -2,6 +2,8 @@ require 'nvim-treesitter.configs'.setup {
     ensure_installed = {
         "toml",
         "rust",
+        "lua",
+        "markdown",
         "c",
     },
     highlight = {
