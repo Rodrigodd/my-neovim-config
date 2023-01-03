@@ -33,6 +33,8 @@ map('n', '<A-l>', [[<C-w>l]])
 -- move beetwen tabs
 map('t', '<A-H>', [[<C-\><C-n>gT]])
 map('t', '<A-L>', [[<C-\><C-n>gt]])
+map('t', '<C-PageDown>', [[<C-\><C-n><C-PageDown>]])
+map('t', '<C-PageUp>', [[<C-\><C-n><C-PageUp>]])
 map('n', 'H', [[gT]])
 map('n', 'L', [[gt]])
 
