@@ -49,7 +49,7 @@ vim.keymap.set('n', '<leader>s', function()
     if navic.is_available() then
         loc = line_to_echo(navic.get_location())
     else
-        loc = { { require('nvim-gps').get_location() } }
+        loc = { { require('nvim-gps').get_location() or "" } }
     end
 
 
