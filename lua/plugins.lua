@@ -1,32 +1,10 @@
-local utils = require 'utils'
-local aucmd = utils.autocmd
-local augroup = utils.augroup
-
--- Install packer
-local execute = vim.api.nvim_command
-
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-end
-
-local group = vim.api.nvim_create_augroup("Packer", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = "plugins.lua",
-    command = [[echo "packer source" | source <afile> | PackerCompile]],
-    group = group,
-})
-
-local use = require('packer').use
-require('packer').startup({ function()
-    use 'lewis6991/impatient.nvim'
-    use 'wbthomason/packer.nvim' -- Package manager
-    use 'nvim-lua/plenary.nvim'
-    use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
-    use {
+return {
+    'wbthomason/packer.nvim', -- Package manager
+    'nvim-lua/plenary.nvim',
+    'tpope/vim-commentary', -- "gc" to comment visual regions/lines
+    {
         'Wansmer/treesj',
-        requires = { 'nvim-treesitter' },
+        dependencies = { 'nvim-treesitter' },
         config = function()
             require('treesj').setup({
                 use_default_keymaps = false,
@@ -34,14 +12,14 @@ require('packer').startup({ function()
             vim.keymap.set("n", "gS", "<cmd>TSJSplit<CR>", { desc = "Split syntax node in multiple lines" })
             vim.keymap.set("n", "gJ", "<cmd>TSJJoin<CR>", { desc = "Joint syntax node in a single lines" })
         end,
-    }
-    use {
+    },
+    {
         'nmac427/guess-indent.nvim',
         config = function()
             require('guess-indent').setup { auto_cmd = false }
         end,
-    }
-    use {
+    },
+    {
         "kylechui/nvim-surround",
         tag = "*", -- Use for stability; omit to use `main` branch for the latest features
         config = function()
@@ -59,8 +37,8 @@ require('packer').startup({ function()
                 }
             })
         end
-    }
-    use {
+    },
+    {
         'windwp/nvim-autopairs',
         config = function()
             local npairs = require('nvim-autopairs');
@@ -85,18 +63,18 @@ require('packer').startup({ function()
             --         :end_wise(function () return true end),
             -- }
         end
-    }
-    use {
+    },
+    {
         'ggandor/leap.nvim',
         config = function()
             require 'leap'.add_default_mappings()
             -- require 'leap'.init_highlight(true)
         end
-    }
+    },
     -- UI to select things (files, grep results, open buffers...)
-    use {
+    {
         'nvim-telescope/telescope.nvim',
-        requires = {
+        dependencies = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-ui-select.nvim'
@@ -104,45 +82,41 @@ require('packer').startup({ function()
         config = function()
             require('plugins.telescope')
         end,
-    }
-    use 'marko-cerovac/material.nvim'
-    use 'lukas-reineke/indent-blankline.nvim'
-    use {
+    },
+    'marko-cerovac/material.nvim',
+    'lukas-reineke/indent-blankline.nvim',
+    {
         'nvim-treesitter/nvim-treesitter',
-        requires = {
+        dependencies = {
             'nvim-treesitter/playground',
             'nvim-treesitter/nvim-treesitter-textobjects',
         },
-        run = ':TSUpdate',
+        build = ':TSUpdate',
         config = function()
             require 'plugins.treesitter'
         end
-    }
-    use {
+    },
+    {
         "SmiteshP/nvim-gps",
-        requires = { "nvim-treesitter/nvim-treesitter" },
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
         after = 'nvim-navic',
         config = function()
             require 'plugins.navic'
         end
-    }
-    use {
+    },
+    {
         'jandamm/cryoline.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons' },
+        dependencies = { 'kyazdani42/nvim-web-devicons' },
         config = function() require 'myline' end,
-    }
-    use {
+    },
+    {
         'lewis6991/gitsigns.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
+        dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             require 'gitsigns'.setup()
         end
-    }
-    use {
-        'simrat39/symbols-outline.nvim',
-        opt = true,
-    }
-    use {
+    },
+    {
         'MunifTanjim/exrc.nvim',
         config = function()
             vim.o.exrc = false
@@ -152,10 +126,10 @@ require('packer').startup({ function()
                 },
             })
         end
-    }
-    use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        as = "lsp_lines",
+    },
+    {
+        name = "lsp_lines",
+        url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         config = function()
             vim.keymap.set(
                 "n", "<leader>j",
@@ -168,22 +142,22 @@ require('packer').startup({ function()
             )
             require("lsp_lines").setup()
         end,
-    })
-    use {
+    },
+    {
         'simrat39/rust-tools.nvim',
-        requires = {
+        dependencies = {
             'mfussenegger/nvim-dap',
             'neovim/nvim-lspconfig'
         },
         before = 'mason.nvim',
-    }
-    use {
+    },
+    {
         "barreiroleo/ltex-extra.nvim",
         before = 'mason.nvim'
-    }
-    use {
+    },
+    {
         'williamboman/mason.nvim',
-        requires = {
+        dependencies = {
             'williamboman/mason-lspconfig.nvim',
             'nvim-lua/lsp-status.nvim',
             'neovim/nvim-lspconfig',
@@ -192,21 +166,21 @@ require('packer').startup({ function()
             'neovim/nvim-lspconfig',
             'nvim-telescope/telescope.nvim',
             'SmiteshP/nvim-navic',
+            'nvim-navic',
         },
-        after = 'nvim-navic',
         config = function()
             require('plugins.lsp')
         end
-    }
-    use {
+    },
+    {
         'L3MON4D3/LuaSnip',
         config = function()
             require('plugins.snips')
         end
-    }
-    use {
+    },
+    {
         'hrsh7th/nvim-cmp',
-        requires = {
+        dependencies = {
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-path',
             'saadparwaiz1/cmp_luasnip',
@@ -215,11 +189,11 @@ require('packer').startup({ function()
         config = function()
             require('plugins.nvimcmp')
         end
-    }
-    use {
+    },
+    {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
             "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim"
@@ -227,26 +201,26 @@ require('packer').startup({ function()
         config = function()
             require('plugins.neotree')
         end
-    }
+    },
 
     -- dap
-    use { "mfussenegger/nvim-dap" }
-    use {
+    { "mfussenegger/nvim-dap" },
+    {
         "rcarriga/nvim-dap-ui",
-        requires = { "mfussenegger/nvim-dap" },
+        dependencies = { "mfussenegger/nvim-dap" },
         config = function()
             require('plugins.dap-ui')
         end
-    }
+    },
 
     -- rust plugins
-    use 'cespare/vim-toml'
-    use 'ron-rs/ron.vim'
-    use {
+    'cespare/vim-toml',
+    'ron-rs/ron.vim',
+    {
         'saecki/crates.nvim',
         tag = 'v0.3.0',
         event = { "BufRead Cargo.toml" },
-        requires = { 'nvim-lua/plenary.nvim' },
+        dependencies = { 'nvim-lua/plenary.nvim' },
         after = 'nvim-cmp',
         config = function()
             require('crates').setup()
@@ -260,14 +234,12 @@ require('packer').startup({ function()
                 end
             })
         end,
-    }
+    },
 
     -- flutter plugins
-    use 'dart-lang/dart-vim-plugin'
-    use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
+    'dart-lang/dart-vim-plugin',
+    { 'akinsho/flutter-tools.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
     -- java plugins
-    use 'mfussenegger/nvim-jdtls'
-end,
-    config = {}
-})
+    'mfussenegger/nvim-jdtls',
+}

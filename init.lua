@@ -9,11 +9,22 @@ set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
 language en_US.UTF-8        " sets the language of the messages / ui (vim)
 ]])
 
-local status_ok, mod = pcall(require, 'impatient')
-if not status_ok then
-    vim.notify("impatient.nvim is not installed")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    print('cloning lazy...')
+    print(vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=main", -- latest stable release
+        lazypath,
+    }))
 end
+vim.opt.rtp:prepend(lazypath)
 
-require('plugins')
+local plugins = require('plugins')
+require("lazy").setup(plugins)
+
 require('options')
 require('mappings')
