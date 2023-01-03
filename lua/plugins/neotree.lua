@@ -96,4 +96,4 @@ neotree.setup({
     }
 })
 
-require 'utils'.map('n', '<C-b>', '<cmd>Neotree reveal toggle<cr>')
+vim.keymap.set('n', '<C-b>', '<cmd>Neotree reveal toggle<cr>')

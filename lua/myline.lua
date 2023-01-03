@@ -83,11 +83,9 @@ local set_highlights = function()
     end
 end
 
-local u = require('utils')
-
-local line_group = u.augroup('StatusLine');
+local line_group = vim.api.nvim_create_augroup('StatusLine', {});
 set_highlights()
-u.autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd("ColorScheme", {
     group = line_group,
     callback = set_highlights,
 })

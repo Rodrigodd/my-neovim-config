@@ -1,5 +1,4 @@
-local utils = require 'utils'
-local map = utils.map
+local map = vim.keymap.set
 
 --Remap space as leader key
 map('', '<Space>', '<Nop>', { silent = true })

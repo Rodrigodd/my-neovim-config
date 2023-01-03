@@ -1,7 +1,6 @@
-local utils = require 'utils'
-local map = utils.map
-local augroup = utils.augroup
-local autocmd = utils.autocmd
+local map = vim.keymap.set
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
 require("mason").setup {}
 require("mason-lspconfig").setup {

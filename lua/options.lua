@@ -39,19 +39,22 @@ vim.o.updatetime = 500
 
 -- Relative line
 
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
 vim.wo.number = true
-local group = vim.api.nvim_create_augroup("ConfigRelativeLine", { clear = true })
-vim.api.nvim_create_autocmd({ 'TermLeave' }, {
+local group = augroup("ConfigRelativeLine", { clear = true })
+autocmd({ 'TermLeave' }, {
     pattern = "*",
     command = [[set nu]],
     group = group,
 })
-vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter', 'TermLeave' }, {
+autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter', 'TermLeave' }, {
     pattern = "*",
     command = [[if &nu && mode() != "i" | set rnu | endif]],
     group = group,
 })
-vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'TermEnter', 'WinLeave' }, {
+autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'TermEnter', 'WinLeave' }, {
     pattern = "*",
     command = [[if &nu | set nornu | endif | if mode() == "t" | set nonumber | endif]],
     group = group,
@@ -59,13 +62,13 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'TermEnter
 
 -- Terminal config
 
-local term_group = vim.api.nvim_create_augroup("ConfigTerminal", { clear = true })
-vim.api.nvim_create_autocmd("WinEnter", {
+local term_group = augroup("ConfigTerminal", { clear = true })
+autocmd("WinEnter", {
     group = term_group,
     pattern = "term://*",
     command = 'startinsert'
 })
-vim.api.nvim_create_autocmd("TermOpen", {
+autocmd("TermOpen", {
     group = term_group,
     command = 'set signcolumn=no | startinsert'
 })

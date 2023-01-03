@@ -22,13 +22,10 @@ require('telescope').setup {
 }
 require("telescope").load_extension("ui-select")
 
-
-local u = require('utils')
-
 local tsb = require 'telescope.builtin'
-u.map('n', '<leader>fr', tsb.resume)
-u.map('n', '<leader>ff', tsb.find_files)
-u.map('n', '<leader>fg', tsb.live_grep)
-u.map('n', '<leader>fb', tsb.buffers)
-u.map('n', '<leader>fh', tsb.help_tags)
-u.map('n', '<leader>fd', function() tsb.diagnostics { severity_limit = 'info' } end)
+vim.keymap.set('n', '<leader>fr', tsb.resume)
+vim.keymap.set('n', '<leader>ff', tsb.find_files)
+vim.keymap.set('n', '<leader>fg', tsb.live_grep)
+vim.keymap.set('n', '<leader>fb', tsb.buffers)
+vim.keymap.set('n', '<leader>fh', tsb.help_tags)
+vim.keymap.set('n', '<leader>fd', function() tsb.diagnostics { severity_limit = 'info' } end)
