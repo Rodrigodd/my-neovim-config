@@ -12,3 +12,6 @@ precompute
 HashMap
 deduplicating
 AST
+monomorphization
+dynasm
+syscall
