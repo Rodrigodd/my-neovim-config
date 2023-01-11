@@ -50,7 +50,18 @@ require('rust-tools').setup {
                 --     enableExperimental = true,
                 -- }
             }
-        }
+        },
+        on_init = function(client)
+            local config, err = pcall(require, 'vsconfig')
+            if err then
+                return false
+            end
+
+            client.config.settings["rust-analyzer"] = vim.tbl_extend('force', client.config.settings["rust-analyzer"],
+                config["rust-analyzer"])
+            client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+            return true
+        end
     },
     dap = {
         -- adapter = {
