@@ -13,7 +13,7 @@ lsp_status.register_progress()
 
 
 local on_attach = function(client, bufnr)
-    print("on attach " .. bufnr)
+    -- print("on attach " .. bufnr)
     lsp_status.on_attach(client, bufnr)
     require 'lsp_signature'.on_attach(client, bufnr)
     if client.server_capabilities.documentSymbolProvider then
@@ -65,6 +65,10 @@ local capabilities = lsp_status.capabilities
 nvim_lsp.util.default_config = vim.tbl_extend("force", nvim_lsp.util.default_config, { capabilities = capabilities })
 nvim_lsp.util.default_config.on_attach = on_attach
 
+--
+require 'plugins.lsp.rust'
+require 'plugins.lsp.ltex'
+
 -- toml lsp
 nvim_lsp.taplo.setup {
     cmd = { 'taplo', 'lsp', 'stdio', '--log-spans' },
@@ -78,9 +82,7 @@ require('flutter-tools').setup {
         capabilities = function(config)
             return vim.tbl_extend('keep', config or {}, capabilities)
         end,
-        -- on_attach = on_attach,
-        cmd = { "D:/flutter/bin/dart.bat", "D:/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot",
-            "--lsp" }
+        on_attach = on_attach,
     }
 }
 
@@ -94,7 +96,8 @@ nvim_lsp.clangd.setup {
 }
 
 
-nvim_lsp.sumneko_lua.setup {
+-- Enable lua
+nvim_lsp.lua_ls.setup {
     settings = {
         Lua = {
             runtime = {
@@ -114,8 +117,55 @@ nvim_lsp.sumneko_lua.setup {
     },
 }
 
-require 'plugins.lsp.rust'
-require 'plugins.lsp.ltex'
+-- Enable XML language server
+nvim_lsp.lemminx.setup {
+    settings = {
+    },
+}
+
+-- Enable texlab language server
+nvim_lsp.texlab.setup {
+    -- autostart = false,
+    cmd = { "texlab" },
+    filetypes = { "tex", "plaintex", "bib" },
+    single_file_support = true,
+    on_attach = function(client, bufnr)
+        require('lspconfig.util').default_config.on_attach(client, bufnr)
+        local opts = { buffer = bufnr }
+        map('n', 'gp', ":TexlabForward<CR>", opts)
+    end,
+    settings = {
+        texlab = {
+            auxDirectory = "build",
+            bibtexFormatter = "texlab",
+            build = {
+                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                executable = "latexmk",
+                forwardSearchAfter = false,
+                onSave = true
+            },
+            chktex = {
+                onEdit = false,
+                onOpenAndSave = false
+            },
+            diagnosticsDelay = 300,
+            formatterLineLength = 80,
+            forwardSearch = {
+                executable = [[C:\Users\Rodrigo\AppData\Local\SumatraPDF\SumatraPDF.exe]],
+                -- executable = [[D:\repos\sumatrapdf\out\dbg64\SumatraPDF.exe]],
+                args = { "-reuse-instance", "%p", "-forward-search", "%f", "%l", "-inverse-search",
+                    "nvim --server " .. vim.v.servername .. [[ --remote-send "<esc><esc>:e %f<CR>%lG"]] },
+
+                -- executable = [[C:\Windows\System32\cmd.exe]],
+                -- args = { "/k", "start", "echo", "%p", "%f", "%l" },
+            },
+            latexFormatter = "latexindent",
+            latexindent = {
+                modifyLineBreaks = false
+            },
+        },
+    },
+}
 
 -- Enable tailwindcss language server
 nvim_lsp.tailwindcss.setup {
@@ -125,6 +175,20 @@ nvim_lsp.tailwindcss.setup {
 nvim_lsp.prismals.setup {}
 -- Enable tsserver language server
 nvim_lsp.tsserver.setup {}
+
+-- Enable pylyzer
+nvim_lsp.pyright.setup {
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true
+            },
+            pythonPath = [[C:\Users\Rodrigo\AppData\Local\Programs\Python\Python39\python.exe]],
+        }
+    }
+}
 
 
 local mod = {}
