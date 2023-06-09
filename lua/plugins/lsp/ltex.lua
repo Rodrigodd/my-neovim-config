@@ -15,4 +15,16 @@ nvim_lsp.ltex.setup {
     settings = {
         ltex = {}
     },
+    on_init = function(client)
+        local status, config = pcall(require('vsconfig'))
+        if not status then
+            return false
+        end
+
+        client.config.settings["ltex"] = vim.tbl_extend('force', client.config.settings["ltex"],
+            config["ltex"])
+
+        client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+        return true
+    end
 }
