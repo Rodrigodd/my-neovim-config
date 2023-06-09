@@ -190,6 +190,67 @@ return {
         before = 'mason.nvim'
     },
     {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = function()
+            -- local status, null_ls = pcall(require, "null-ls")
+            -- if (not status) then return end
+
+            local null_ls = require("null-ls")
+
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.diagnostics.eslint_d.with({
+                        diagnostics_format = '[eslint] #{m}\n(#{c})'
+                    }),
+                    null_ls.builtins.formatting.prettierd.with({
+                        filetypes = {
+                            "javascript",
+                            "javascriptreact",
+                            "typescript",
+                            "typescriptreact",
+                            -- "vue",
+                            -- "css",
+                            -- "scss",
+                            -- "less",
+                            -- "html",
+                            -- "json",
+                            -- "jsonc",
+                            -- "yaml",
+                            -- "markdown",
+                            -- "markdown.mdx",
+                            -- "graphql",
+                            -- "handlebars",
+                        }
+                    }),
+                },
+                on_attach = require('lspconfig.util').default_config.on_attach,
+            })
+        end,
+        dependencies = {
+            'neovim/nvim-lspconfig'
+        }
+    },
+    {
+        'MunifTanjim/prettier.nvim',
+        opts = {
+            bin = 'prettierd',
+            filetypes = {
+                "css",
+                "javascript",
+                "javascriptreact",
+                "typescript",
+                "typescriptreact",
+                "json",
+                "scss",
+                "less"
+            }
+        },
+        dependencies = {
+            'neovim/nvim-lspconfig',
+            'jose-elias-alvarez/null-ls.nvim',
+        },
+    },
+    {
         'williamboman/mason.nvim',
         dependencies = {
             'williamboman/mason-lspconfig.nvim',

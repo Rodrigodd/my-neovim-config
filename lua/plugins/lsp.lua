@@ -47,7 +47,11 @@ local on_attach = function(client, bufnr)
         autocmd("BufWritePre", {
             group = lsp_group,
             buffer = bufnr,
-            callback = function() vim.lsp.buf.format({ timeout_ms = 1000 }) end
+            callback = function() vim.lsp.buf.format({
+                    timeout_ms = 1000,
+                    filter = function(c) return c.name ~= "tsserver" end,
+                })
+            end
         })
         vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
     end
@@ -111,6 +115,15 @@ nvim_lsp.sumneko_lua.setup {
 
 require 'plugins.lsp.rust'
 require 'plugins.lsp.ltex'
+
+-- Enable tailwindcss language server
+nvim_lsp.tailwindcss.setup {
+    root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
+        'postcss.config.ts', 'package.json', 'node_modules')
+}
+nvim_lsp.prismals.setup {}
+-- Enable tsserver language server
+nvim_lsp.tsserver.setup {}
 
 
 local mod = {}
