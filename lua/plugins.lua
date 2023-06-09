@@ -177,7 +177,8 @@ return {
         end,
     },
     {
-        'simrat39/rust-tools.nvim',
+        -- 'simrat39/rust-tools.nvim',
+        'Ciel-MC/rust-tools.nvim',
         dependencies = {
             'mfussenegger/nvim-dap',
             'neovim/nvim-lspconfig'
