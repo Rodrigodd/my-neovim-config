@@ -40,6 +40,8 @@ local on_attach = function(client, bufnr)
     map('n', '<leader>fs', tsb.lsp_document_symbols, opts)
     map('n', '<leader>fw', tsb.lsp_dynamic_workspace_symbols, opts)
 
+
+    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
     if client.server_capabilities.documentFormattingProvider then
         local lsp_group = augroup("Lsp", { clear = false })
         -- Map :Format to vim.lsp.buf.format()
@@ -53,7 +55,6 @@ local on_attach = function(client, bufnr)
                 })
             end
         })
-        vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
     end
 
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
