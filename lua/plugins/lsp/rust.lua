@@ -80,7 +80,8 @@ require('rust-tools').setup {
             host = "127.0.0.1",
             executable = {
                 command = codelldb_path,
-                args = { "--port", "${port}", "--liblldb", liblldb_path },
+                args = { "--port", "57693", "--liblldb", liblldb_path },
+                detached = false,
             }
         }
     }
