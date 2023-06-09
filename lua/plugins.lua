@@ -67,21 +67,8 @@ return {
     },
     {
         "kylechui/nvim-surround",
-        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
         config = function()
-            require("nvim-surround").setup({
-                surrounds = {
-                    ["g"] = {
-                        add = function()
-                            local config = require("nvim-surround.config")
-                            local result = config.get_input("Enter the struct name: ")
-                            if result then
-                                return { { result .. "<" }, { ">" } }
-                            end
-                        end,
-                    }
-                }
-            })
+            require('plugins.surround')
         end
     },
     {
