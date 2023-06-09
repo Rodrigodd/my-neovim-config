@@ -14,6 +14,11 @@ neotree.setup({
         },
     },
     filesystem = {
+        -- "auto"   means refreshes are async, but it's synchronous when called from the Neotree commands.
+        -- "always" means directory scans are always async.
+        -- "never"  means directory scans are never async.
+        async_directory_scan = "always",
+
         filtered_items = {
             hide_dotfiles = true,
             hide_gitignored = false,
