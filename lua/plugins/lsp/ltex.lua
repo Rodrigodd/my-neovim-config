@@ -1,6 +1,7 @@
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.ltex.setup {
+    autostart = false,
     on_attach = function(client, bufnr)
         require("ltex_extra").setup {
             load_langs = { "pt-Br", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
