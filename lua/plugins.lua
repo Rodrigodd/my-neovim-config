@@ -1,6 +1,10 @@
 return {
     'wbthomason/packer.nvim', -- Package manager
     'nvim-lua/plenary.nvim',
+    {
+        'Joakker/lua-json5',
+        build = 'cargo build --release && mv target/release/liblua_json5.dll lua/json5.dll && cargo clean',
+    },
     'tpope/vim-commentary', -- "gc" to comment visual regions/lines
     {
         'Wansmer/treesj',
