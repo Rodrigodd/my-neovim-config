@@ -36,6 +36,30 @@ return {
             vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
         end
     },
+    {
+        'anuvyklack/hydra.nvim',
+        lazy = true,
+        config = function()
+            vim.keymap.del({ 'o', 'x', 'n' }, '[%', {})
+            vim.keymap.del({ 'o', 'x', 'n' }, ']%', {})
+
+            local Hydra = require('hydra')
+            Hydra({
+                -- name = "Navigate diagnostics",
+                mode = 'n',
+                body = 'g',
+                config = {
+                    -- hint = false,
+                    color = 'pink',
+                },
+                heads = {
+                    { '[', vim.diagnostic.goto_prev },
+                    { ']', vim.diagnostic.goto_next },
+                },
+            })
+        end,
+    },
+    {
         'nmac427/guess-indent.nvim',
         config = function()
             require('guess-indent').setup { auto_cmd = false }
