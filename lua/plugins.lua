@@ -258,6 +258,7 @@ return {
             'neovim/nvim-lspconfig',
             'ray-x/lsp_signature.nvim',
 
+            'akinsho/flutter-tools.nvim',
             'neovim/nvim-lspconfig',
             'nvim-telescope/telescope.nvim',
             'SmiteshP/nvim-navic',
@@ -352,7 +353,7 @@ return {
     { "mfussenegger/nvim-dap" },
     {
         "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap" },
+        dependencies = { "mfussenegger/nvim-dap", 'Joakker/lua-json5' },
         config = function()
             require('plugins.dap-ui')
         end
