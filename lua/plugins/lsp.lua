@@ -119,8 +119,8 @@ nvim_lsp.lua_ls.setup {
 
 -- Enable XML language server
 nvim_lsp.lemminx.setup {
-    settings = {
-    },
+    autostart = false,
+    settings = {},
 }
 
 -- Enable texlab language server
