@@ -3,7 +3,10 @@ return {
     'nvim-lua/plenary.nvim',
     {
         'Joakker/lua-json5',
-        build = 'cargo build --release && mv target/release/liblua_json5.dll lua/json5.dll && cargo clean',
+        build = 
+            vim.loop.os_uname().sysname == 'Windows_NT' 
+                and 'cargo build --release && mv target/release/liblua_json5.dll lua/json5.dll && cargo clean'
+                or './install.sh',
     },
     'tpope/vim-commentary', -- "gc" to comment visual regions/lines
     {
