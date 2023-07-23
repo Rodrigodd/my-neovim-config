@@ -92,6 +92,11 @@ nvim_lsp.clangd.setup {
     capabilities = vim.tbl_extend('keep', { offsetEncoding = 'utf-16' }, capabilities),
 
     handlers = lsp_status.extensions.clangd.setup(),
+    cmd = {
+        "clangd",
+        -- "--background-index",
+        "--fallback-style=None"
+    },
     init_options = {
         clangdFileStatus = true
     },
