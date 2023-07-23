@@ -37,28 +37,28 @@ vim.wo.signcolumn = "yes"
 --Decrease update time
 vim.o.updatetime = 500
 
--- Relative line
-
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+-- Relative line
+
 vim.wo.number = true
-local group = augroup("ConfigRelativeLine", { clear = true })
-autocmd({ 'TermLeave' }, {
-    pattern = "*",
-    command = [[set nu]],
-    group = group,
-})
-autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter', 'TermLeave' }, {
-    pattern = "*",
-    command = [[if &nu && mode() != "i" | set rnu | endif]],
-    group = group,
-})
-autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'TermEnter', 'WinLeave' }, {
-    pattern = "*",
-    command = [[if &nu | set nornu | endif | if mode() == "t" | set nonumber | endif]],
-    group = group,
-})
+-- local group = augroup("ConfigRelativeLine", { clear = true })
+-- autocmd({ 'TermLeave' }, {
+--     pattern = "*",
+--     command = [[set nu]],
+--     group = group,
+-- })
+-- autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter', 'TermLeave' }, {
+--     pattern = "*",
+--     command = [[if &nu && mode() != "i" | set rnu | endif]],
+--     group = group,
+-- })
+-- autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'TermEnter', 'WinLeave' }, {
+--     pattern = "*",
+--     command = [[if &nu | set nornu | endif | if mode() == "t" | set nonumber | endif]],
+--     group = group,
+-- })
 
 -- Terminal config
 
