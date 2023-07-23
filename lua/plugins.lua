@@ -39,6 +39,9 @@ return {
     {
         'anuvyklack/hydra.nvim',
         lazy = true,
+        keys = {
+            "<leader>gd",
+        },
         config = function()
             vim.keymap.del({ 'o', 'x', 'n' }, '[%', {})
             vim.keymap.del({ 'o', 'x', 'n' }, ']%', {})
@@ -47,14 +50,14 @@ return {
             Hydra({
                 -- name = "Navigate diagnostics",
                 mode = 'n',
-                body = 'g',
+                body = '<leader>gd',
                 config = {
                     -- hint = false,
                     color = 'pink',
                 },
                 heads = {
-                    { '[', vim.diagnostic.goto_prev },
-                    { ']', vim.diagnostic.goto_next },
+                    { 'n', vim.diagnostic.goto_next },
+                    { 'N', vim.diagnostic.goto_prev },
                 },
             })
         end,
