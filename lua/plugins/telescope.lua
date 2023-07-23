@@ -13,9 +13,10 @@ require('telescope').setup {
             require("telescope.themes").get_ivy {
                 layout_config = {
                     height = function(self, max_columns, max_lines)
-                        return table.getn(self.finder.results) + 3
+                        return #self.finder.results + 3
                     end
-                }
+                },
+                cache_picker = false,
             }
         }
     }
