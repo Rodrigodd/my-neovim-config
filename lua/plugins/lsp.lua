@@ -88,7 +88,9 @@ require('flutter-tools').setup {
 
 -- Enable clangd
 nvim_lsp.clangd.setup {
-    -- on_attach = on_attach,
+    -- avoid warnging about multiple different client offset_encodings detected for buffer
+    capabilities = vim.tbl_extend('keep', { offsetEncoding = 'utf-16' }, capabilities),
+
     handlers = lsp_status.extensions.clangd.setup(),
     init_options = {
         clangdFileStatus = true
