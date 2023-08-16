@@ -174,6 +174,8 @@ nvim_lsp.texlab.setup {
     },
 }
 
+nvim_lsp.marksman.setup {}
+
 -- Enable tailwindcss language server
 nvim_lsp.tailwindcss.setup {
     root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
