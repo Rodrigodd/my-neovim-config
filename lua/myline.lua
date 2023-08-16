@@ -122,7 +122,7 @@ M.modes = setmetatable({
     ['r?']   = { 'Confirm', 'C', color = colors.purple };
     ['!']    = { 'Shell', 'S', color = colors.purple };
     ['t']    = { 'Terminal', 'T', color = colors.purple };
-    ['nt']   = { 'Terminal', 'T', color = colors.purple };
+    ['nt']   = { 'Terminal', 'T', color = colors.green };
 }, {
     __index = function()
         return { 'Unknown', 'U', color = colors.gray } -- handle edge cases
