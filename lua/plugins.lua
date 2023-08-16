@@ -315,9 +315,9 @@ return {
                 auto_trigger = true,
                 debounce = 75,
                 keymap = {
-                    accept = "<M-ç>",
+                    accept = "<M-k>",
                     accept_word = '<M-l>',
-                    accept_line = '<M-k>',
+                    accept_line = '<M-j>',
                     next = "<M-]>",
                     prev = "<M-[>",
                     dismiss = "<C-]>",
