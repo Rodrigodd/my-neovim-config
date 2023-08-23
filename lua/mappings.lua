@@ -65,6 +65,9 @@ augroup end
 -- Y yank until the end of line
 map('n', 'Y', 'y$')
 
+-- visual select pasted text
+map('n', 'gp', '`[v`]')
+
 -- Toggle spellcheck
 vim.keymap.set('n', '<C-F11>', ':set spell!<CR>')
 vim.keymap.set('i', '<C-F11>', '<C-O>:set spell!<CR>')
