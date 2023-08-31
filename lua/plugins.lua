@@ -123,6 +123,11 @@ return {
         end,
     },
     'marko-cerovac/material.nvim',
+    { 'rose-pine/neovim', name = 'rose-pine', opts = {
+        disable_background = true,
+        disable_float_background = false,
+        disable_italics = true,
+    } },
     'lukas-reineke/indent-blankline.nvim',
     {
         'nvim-treesitter/nvim-treesitter',
