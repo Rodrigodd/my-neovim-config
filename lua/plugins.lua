@@ -8,7 +8,13 @@ return {
                 and 'cargo build --release && mv target/release/liblua_json5.dll lua/json5.dll && cargo clean'
                 or './install.sh',
     },
-    'tpope/vim-commentary', -- "gc" to comment visual regions/lines
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        },
+        lazy = false,
+    },
     {
         'Wansmer/treesj',
         dependencies = { 'nvim-treesitter' },
