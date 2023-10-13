@@ -70,7 +70,7 @@ autocmd("WinEnter", {
 })
 autocmd("TermOpen", {
     group = term_group,
-    command = 'set signcolumn=no | startinsert'
+    command = 'set signcolumn=no | set nonumber | startinsert'
 })
 
 
