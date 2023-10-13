@@ -42,7 +42,11 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 local function load_tasks()
-    require('dap.ext.vscode').load_launchjs(nil, { lldb = { 'rust', 'c', 'cpp' } })
+    require('dap.ext.vscode').load_launchjs(nil, { lldb = { 'rust', 'c', 'cpp' }, cppdbg = { 'c', 'cpp', 'rust' } })
+    vim.print(dap.configurations)
+    if dap.configurations.rust == nil then
+        dap.configurations.rust = {}
+    end
     for _, conf in pairs(dap.configurations.rust) do
         if conf.cargo ~= nil then
             local cmd = { 'cargo' }
@@ -129,8 +133,8 @@ require("dapui").setup({
         },
     },
     floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
+        max_height = nil,  -- These can be integers or a float between 0 and 1.
+        max_width = nil,   -- Floats will be treated as percentage of your screen.
         border = "single", -- Border style. Can be "single", "double" or "rounded"
         mappings = {
             close = { "q", "<Esc>" },
@@ -139,12 +143,24 @@ require("dapui").setup({
     windows = { indent = 1 },
 })
 
+local cpptools_extension_path = vim.fn.stdpath('data') ..
+    [[/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7]]
+dap.adapters.cppdbg = {
+    id = 'cppdbg',
+    type = 'executable',
+    command = cpptools_extension_path,
+}
+
+local codelldb_extension_path = vim.fn.stdpath('data') .. [[/mason/packages/codelldb/extension]]
+local codelldb_path = codelldb_extension_path .. '/adapter/codelldb'
+-- local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+local liblldb_path = codelldb_extension_path .. '/lldb/bin/liblldb.dll'
+
 dap.adapters.lldb = {
     command = "lldb-vscode",
     executable = {
-        args = { "--port", "57693", "--liblldb",
-            "C:\\Users\\Rodrigo\\AppData\\Local\\nvim-data/mason/packages/codelldb/extension/lldb/bin/liblldb.dll" },
-        command = "C:\\Users\\Rodrigo\\AppData\\Local\\nvim-data/mason/packages/codelldb/extension/adapter/codelldb",
+        args = { "--port", "57693", "--liblldb", liblldb_path },
+        command = codelldb_path,
         detached = false
     },
     host = "127.0.0.1",
