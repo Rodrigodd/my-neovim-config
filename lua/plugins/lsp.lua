@@ -158,10 +158,21 @@ nvim_lsp.texlab.setup {
             diagnosticsDelay = 300,
             formatterLineLength = 80,
             forwardSearch = {
-                executable = [[C:\Users\Rodrigo\AppData\Local\SumatraPDF\SumatraPDF.exe]],
+                -- executable = [[C:\Users\Rodrigo\AppData\Local\SumatraPDF\SumatraPDF.exe]],
                 -- executable = [[D:\repos\sumatrapdf\out\dbg64\SumatraPDF.exe]],
-                args = { "-reuse-instance", "%p", "-forward-search", "%f", "%l", "-inverse-search",
-                    "nvim --server " .. vim.v.servername .. [[ --remote-send "<esc><esc>:e %f<CR>%lG"]] },
+                -- args = { "-reuse-instance", "%p", "-forward-search", "%f", "%l", "-inverse-search",
+                --     "nvim --server " .. vim.v.servername .. [[ --remote-send "<esc><esc>:e %f<CR>%lG"]] },
+
+                executable = [[sioyek]],
+                args = {
+                    "--reuse-window",
+                    "%p",
+                    "--forward-search-file", "%f",
+                    "--forward-search-line", "%l",
+                    "--forward-search-column", "%c",
+                    "--inverse-search",
+                    "nvim --server " .. vim.v.servername .. [[ --remote-send "<esc><esc>:e %%1<CR>%%2G"]],
+                },
 
                 -- executable = [[C:\Windows\System32\cmd.exe]],
                 -- args = { "/k", "start", "echo", "%p", "%f", "%l" },
