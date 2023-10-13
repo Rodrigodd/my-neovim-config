@@ -49,7 +49,8 @@ local on_attach = function(client, bufnr)
         autocmd("BufWritePre", {
             group = lsp_group,
             buffer = bufnr,
-            callback = function() vim.lsp.buf.format({
+            callback = function()
+                vim.lsp.buf.format({
                     timeout_ms = 1000,
                     filter = function(c) return c.name ~= "tsserver" end,
                 })

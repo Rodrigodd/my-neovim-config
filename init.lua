@@ -5,7 +5,7 @@
 
 -- set language to English
 vim.cmd([[
-set langmenu=en_US.UTF-8    " sets the language of the menu (gvim) 
+set langmenu=en_US.UTF-8    " sets the language of the menu (gvim)
 language en_US.UTF-8        " sets the language of the messages / ui (vim)
 ]])
 
