@@ -23,6 +23,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+if vim.g.vscode then
+    require('vscode')
+    return
+end
+
 require('mappings')
 
 local plugins = require('plugins')
