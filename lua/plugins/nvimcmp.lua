@@ -34,6 +34,7 @@ cmp.setup {
         end, { "i", "s" }),
     },
     sources = cmp.config.sources {
+        { name = 'nvim_lua' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
     },
