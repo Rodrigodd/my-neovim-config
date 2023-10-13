@@ -400,12 +400,15 @@ return {
         end,
     },
 
+    'elkowar/yuck.vim',
+
     -- flutter plugins
     'dart-lang/dart-vim-plugin',
     { 'akinsho/flutter-tools.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
     -- java plugins
     'mfussenegger/nvim-jdtls',
+
     -- markdown plugins
     {
         'iamcco/markdown-preview.nvim',
