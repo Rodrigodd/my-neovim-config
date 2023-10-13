@@ -24,14 +24,28 @@ map('n', '<Right>', '<Nop>')
 
 -- move beetwen windows
 -- also leave terminal mode
-map('t', '<A-h>', [[<C-\><C-n><C-w>h]])
+
+_G.move_to_window = function(dir)
+    if vim.fn.winnr(dir) == vim.fn.winnr() then
+        -- if there is no window in that direction, change tab
+        if dir == 'l' then
+            vim.cmd('tabnext')
+        elseif dir == 'h' then
+            vim.cmd('tabprevious')
+        end
+    else
+        vim.cmd('wincmd ' .. dir)
+    end
+end
+
+map('t', '<A-h>', [[<C-\><C-n><cmd>lua move_to_window('h')<CR>]])
 map('t', '<A-j>', [[<C-\><C-n><C-w>j]])
 map('t', '<A-k>', [[<C-\><C-n><C-w>k]])
-map('t', '<A-l>', [[<C-\><C-n><C-w>l]])
-map('n', '<A-h>', [[<C-w>h]])
+map('t', '<A-l>', [[<C-\><C-n><cmd>lua move_to_window('l')<CR>]])
+map('n', '<A-h>', [[<cmd>lua move_to_window('h')<CR>]])
 map('n', '<A-j>', [[<C-w>j]])
 map('n', '<A-k>', [[<C-w>k]])
-map('n', '<A-l>', [[<C-w>l]])
+map('n', '<A-l>', [[<cmd>lua move_to_window('l')<CR>]])
 
 -- move beetwen tabs
 map('t', '<A-H>', [[<C-\><C-n>gT]])
