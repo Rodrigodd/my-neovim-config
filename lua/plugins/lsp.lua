@@ -185,7 +185,9 @@ nvim_lsp.texlab.setup {
     },
 }
 
-nvim_lsp.marksman.setup {}
+nvim_lsp.marksman.setup {
+    autostart = false,
+}
 
 -- Enable tailwindcss language server
 nvim_lsp.tailwindcss.setup {
