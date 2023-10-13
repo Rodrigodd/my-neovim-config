@@ -200,6 +200,7 @@ nvim_lsp.tsserver.setup {}
 
 -- Enable pylyzer
 nvim_lsp.pyright.setup {
+    autostart = false,
     settings = {
         python = {
             analysis = {
