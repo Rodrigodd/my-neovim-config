@@ -13,8 +13,8 @@ map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 --Center search result when jumping around
-map('n', 'n', "nzz")
-map('n', 'N', "Nzz")
+-- map('n', 'n', "nzz")
+-- map('n', 'N', "Nzz")
 
 -- disable arrows
 map('n', '<Up>', '<Nop>')
