@@ -207,7 +207,7 @@ nvim_lsp.pyright.setup {
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true
             },
-            pythonPath = [[C:\Users\Rodrigo\AppData\Local\Programs\Python\Python39\python.exe]],
+            -- pythonPath = [[C:\Users\Rodrigo\AppData\Local\Programs\Python\Python39\python.exe]],
         }
     }
 }
