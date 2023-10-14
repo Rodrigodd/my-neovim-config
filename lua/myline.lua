@@ -10,6 +10,8 @@ local fn = vim.fn
 local api = vim.api
 local M = {}
 
+local config_git_status = require('git_check_status').git_status(vim.fn.stdpath('config'))
+
 M.trunc_width = setmetatable({
     -- You can adjust these values to your liking, if you want
     -- I promise this will all makes sense later :)
@@ -67,13 +69,12 @@ local set_hl = function(group, options)
 end
 
 M.highlights = {
-    { 'Mode', { bg = colors.green, fg = colors.bg, gui = "bold" } },
-    { 'Filename', { bg = colors.section_bg, fg = colors.fg } },
-    { 'CloseSection', { bg = 'NONE', fg = colors.section_bg } },
-    { 'MiddleBar', { bg = 'NONE', fg = colors.gray } },
-
-    { 'OpenInactive', { bg = colors.inactive_file, fg = colors.bg } },
-    { 'FileInactive', { bg = colors.inactive_file, fg = colors.fg } },
+    { 'Mode',          { bg = colors.green, fg = colors.bg, gui = "bold" } },
+    { 'Filename',      { bg = colors.section_bg, fg = colors.fg } },
+    { 'CloseSection',  { bg = 'NONE', fg = colors.section_bg } },
+    { 'MiddleBar',     { bg = 'NONE', fg = colors.gray } },
+    { 'OpenInactive',  { bg = colors.inactive_file, fg = colors.bg } },
+    { 'FileInactive',  { bg = colors.inactive_file, fg = colors.fg } },
     { 'CloseInactive', { bg = colors.bg, fg = colors.inactive_file } },
 }
 
@@ -99,30 +100,30 @@ M.separators = {
 }
 
 M.modes = setmetatable({
-    ['n']    = { 'Normal', 'N', color = colors.green };
-    ['no']   = { 'NPending', 'N·P', color = colors.green };
-    ['niI']  = { 'Normal', 'N·P', color = colors.gray };
-    ['niR']  = { 'Normal', 'N·P', color = colors.gray };
-    ['niV']  = { 'Normal', 'N·P', color = colors.gray };
-    ['v']    = { 'Visual', 'V', color = colors.purple };
-    ['V']    = { 'V·Line', 'V·L', color = colors.purple };
-    ['\022'] = { 'V·Block', 'V·B', color = colors.purple };
-    ['s']    = { 'Select', 'S', color = colors.yellow };
-    ['S']    = { 'S·Line', 'S·L', color = colors.yellow };
-    ['\019'] = { 'S·Block', 'S·B', color = colors.yellow };
-    ['i']    = { 'Insert', 'I', color = colors.blue };
-    ['ic']   = { 'Insert', 'I', color = colors.blue };
-    ['R']    = { 'Replace', 'R', color = colors.red };
-    ['Rv']   = { 'VReplace', 'V·R', color = colors.red };
-    ['c']    = { 'Command', 'C', color = colors.purple };
-    ['cv']   = { 'Vim·Ex ', 'V·E', color = colors.purple };
-    ['ce']   = { 'Ex', 'E', color = colors.purple };
-    ['r']    = { 'Prompt', 'P', color = colors.purple };
-    ['rm']   = { 'More', 'M', color = colors.purple };
-    ['r?']   = { 'Confirm', 'C', color = colors.purple };
-    ['!']    = { 'Shell', 'S', color = colors.purple };
-    ['t']    = { 'Terminal', 'T', color = colors.purple };
-    ['nt']   = { 'Terminal', 'T', color = colors.green };
+    ['n']    = { 'Normal', 'N', color = colors.green },
+    ['no']   = { 'NPending', 'N·P', color = colors.green },
+    ['niI']  = { 'Normal', 'N·P', color = colors.gray },
+    ['niR']  = { 'Normal', 'N·P', color = colors.gray },
+    ['niV']  = { 'Normal', 'N·P', color = colors.gray },
+    ['v']    = { 'Visual', 'V', color = colors.purple },
+    ['V']    = { 'V·Line', 'V·L', color = colors.purple },
+    ['\022'] = { 'V·Block', 'V·B', color = colors.purple },
+    ['s']    = { 'Select', 'S', color = colors.yellow },
+    ['S']    = { 'S·Line', 'S·L', color = colors.yellow },
+    ['\019'] = { 'S·Block', 'S·B', color = colors.yellow },
+    ['i']    = { 'Insert', 'I', color = colors.blue },
+    ['ic']   = { 'Insert', 'I', color = colors.blue },
+    ['R']    = { 'Replace', 'R', color = colors.red },
+    ['Rv']   = { 'VReplace', 'V·R', color = colors.red },
+    ['c']    = { 'Command', 'C', color = colors.purple },
+    ['cv']   = { 'Vim·Ex ', 'V·E', color = colors.purple },
+    ['ce']   = { 'Ex', 'E', color = colors.purple },
+    ['r']    = { 'Prompt', 'P', color = colors.purple },
+    ['rm']   = { 'More', 'M', color = colors.purple },
+    ['r?']   = { 'Confirm', 'C', color = colors.purple },
+    ['!']    = { 'Shell', 'S', color = colors.purple },
+    ['t']    = { 'Terminal', 'T', color = colors.purple },
+    ['nt']   = { 'Terminal', 'T', color = colors.green },
 }, {
     __index = function()
         return { 'Unknown', 'U', color = colors.gray } -- handle edge cases
@@ -141,6 +142,16 @@ M.get_current_mode = function(self)
     end
 
     return string.format(' %7s ', mode[1]):upper()
+end
+
+M.get_config_status = function()
+    if config_git_status == "up-to-date" then
+        return ""
+    elseif config_git_status == "need to push" then
+        return " • "
+    else
+        return "config " .. config_git_status .. " "
+    end
 end
 
 M.get_git_status = function(self)
@@ -247,6 +258,7 @@ M.set_active = function(self)
     local diagnostics = colors.middle .. self:get_diagnostic()
     local status = colors.middle .. self:get_lsp_status()
 
+    local config_git_status = self:get_config_status()
     local git = self:get_git_status()
     local open_mode = colors.mode .. self.separators.angle[2]
     local line_col = self:get_line_col()
@@ -254,7 +266,9 @@ M.set_active = function(self)
     return table.concat({
         colors.active, mode, filename, close_section,
         diagnostics, status,
-        "%=", git,
+        "%=",
+        config_git_status,
+        git,
         open_mode, line_col
     })
 end
