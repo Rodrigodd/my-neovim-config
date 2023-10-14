@@ -7,6 +7,7 @@ function M.git_status(pwd, upstream)
     local local_commit = vim.fn.system(cmd .. 'rev-parse @')
     local remote_commit = vim.fn.system(cmd .. 'rev-parse ' .. upstream)
     local base_commit = vim.fn.system(cmd .. 'merge-base @ ' .. upstream)
+    local dirty_status = vim.fn.system(cmd .. 'status --porcelain')
 
     -- Remove trailing newline characters
     local_commit = string.gsub(local_commit, '\n', '')
@@ -14,7 +15,11 @@ function M.git_status(pwd, upstream)
     base_commit = string.gsub(base_commit, '\n', '')
 
     if local_commit == remote_commit then
-        return "up-to-date"
+        if dirty_status == "" then
+            return "up-to-date"
+        else
+            return "dirty"
+        end
     elseif local_commit == base_commit then
         return "need to pull"
     elseif remote_commit == base_commit then

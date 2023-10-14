@@ -151,7 +151,10 @@ end
 M.get_config_status = function()
     if config_git_status == "up-to-date" then
         return ""
+    elseif config_git_status == "dirty" then
+        return " 󱥸 "
     elseif config_git_status == "need to push" then
+        -- 󱥸󰽷
         return " • "
     else
         return "config " .. config_git_status .. " "
