@@ -70,6 +70,7 @@ end
 
 M.highlights = {
     { 'Mode',          { bg = colors.green, fg = colors.bg, gui = "bold" } },
+    { 'OpenMode',      { bg = 'NONE', fg = colors.green, gui = "bold" } },
     { 'Filename',      { bg = colors.section_bg, fg = colors.fg } },
     { 'CloseSection',  { bg = 'NONE', fg = colors.section_bg } },
     { 'MiddleBar',     { bg = 'NONE', fg = colors.gray } },
@@ -94,7 +95,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 M.separators = {
     arrow = { '', '' },
     rounded = { '', '' },
-    angle = { '', '' },
+    angle = { '', '', },
     slash = { '' },
     blank = { '', '' },
 }
@@ -135,7 +136,10 @@ M.get_current_mode = function(self)
     local mode = self.modes[current_mode]
 
     self.highlights[1][2].bg = mode.color
+    self.highlights[2][2].fg = mode.color
+
     set_hl(self.highlights[1][1], self.highlights[1][2])
+    set_hl(self.highlights[2][1], self.highlights[2][2])
 
     if self:is_truncated(self.trunc_width.mode) then
         return string.format(' %s ', mode[2]):upper()
@@ -260,7 +264,7 @@ M.set_active = function(self)
 
     local config_git_status = self:get_config_status()
     local git = self:get_git_status()
-    local open_mode = colors.mode .. self.separators.angle[2]
+    local open_mode = colors.open_mode .. self.separators.angle[2] .. colors.mode
     local line_col = self:get_line_col()
 
     return table.concat({
