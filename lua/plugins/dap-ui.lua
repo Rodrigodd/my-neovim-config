@@ -77,7 +77,12 @@ local function load_tasks()
     end
 end
 
-require('dap.ext.vscode').json_decode = require 'json5'.parse
+local status, json5 = pcall(require, "json5")
+if (status) then
+    require('dap.ext.vscode').json_decode = json5.parse
+else
+    print("warning: load json5 failed")
+end
 
 local opts = { silent = true }
 vim.keymap.set('n', '<Leader>b', dap.toggle_breakpoint, opts)
