@@ -47,6 +47,8 @@ require 'nvim-treesitter.configs'.setup {
                 ["if"] = "@function.inner",
                 ["at"] = "@parameter.outer",
                 ["it"] = "@parameter.inner",
+                ["ac"] = "@comment.outer",
+                ["ic"] = "@comment.inner",
             },
             selection_modes = {},
             include_surrounding_whitespace = true,
