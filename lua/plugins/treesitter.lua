@@ -10,6 +10,11 @@ require 'nvim-treesitter.configs'.setup {
     highlight = {
         enable = true,
         disable = {},
+        disable = function(lang, bufnr) -- Disable in large buffers
+            local lines = vim.api.nvim_buf_line_count(bufnr)
+            local file_size = vim.api.nvim_buf_get_offset(bufnr, lines)
+            return file_size > 100 * 1024 -- 100 KiB
+        end,
     },
     indent = {
         enable = false,
