@@ -122,7 +122,8 @@ return {
         dependencies = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-ui-select.nvim'
+            'nvim-telescope/telescope-ui-select.nvim',
+            { "nvim-telescope/telescope-live-grep-args.nvim" , version = "^1.0.0" },
         },
         config = function()
             require('plugins.telescope')
