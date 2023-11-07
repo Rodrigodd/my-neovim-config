@@ -37,6 +37,8 @@ vim.wo.signcolumn = "yes"
 --Decrease update time
 vim.o.updatetime = 500
 
+vim.o.modeline = false
+
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
