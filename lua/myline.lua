@@ -10,7 +10,11 @@ local fn = vim.fn
 local api = vim.api
 local M = {}
 
-local config_git_status = require('git_check_status').git_status(vim.fn.stdpath('config'))
+local config_git_status = ""
+require('git_check_status').git_status(vim.fn.stdpath('config'), function(status)
+    config_git_status = status
+    vim.fn.cmd('redraws')
+end)
 
 M.trunc_width = setmetatable({
     -- You can adjust these values to your liking, if you want
