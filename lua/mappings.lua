@@ -82,9 +82,12 @@ map('n', 'Y', 'y$')
 -- visual select pasted text
 map('n', 'gp', '`[v`]')
 
+-- copy to clipboard using ctrl+C
+map('v', '<C-c>', '"+y')
+
 -- Toggle spellcheck
-vim.keymap.set('n', '<C-F11>', ':set spell!<CR>')
-vim.keymap.set('i', '<C-F11>', '<C-O>:set spell!<CR>')
+map('n', '<C-F11>', ':set spell!<CR>')
+map('i', '<C-F11>', '<C-O>:set spell!<CR>')
 
 -- diagnostics
 map('n', 'g[', vim.diagnostic.goto_prev)
