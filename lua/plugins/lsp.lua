@@ -236,7 +236,13 @@ nvim_lsp.jedi_language_server.setup {
     }
 }
 
+-- Enable haskell language server
+nvim_lsp.hls.setup {
+    settings = {}
+}
 
+-- Enable julia lsp
+require 'lspconfig'.julials.setup {}
 
 local mod = {}
 
