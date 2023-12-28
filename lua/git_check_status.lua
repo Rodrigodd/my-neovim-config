@@ -17,7 +17,7 @@ function M.git_status(pwd, on_status, upstream)
             remote_commit = string.gsub(remote_commit, '\n', '')
             base_commit = string.gsub(base_commit, '\n', '')
 
-            status = "up-to-date"
+            local status = "up-to-date"
 
             if local_commit == remote_commit then
                 if dirty_status == "" then
