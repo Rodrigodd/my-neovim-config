@@ -13,7 +13,7 @@ local M = {}
 local config_git_status = ""
 require('git_check_status').git_status(vim.fn.stdpath('config'), function(status)
     config_git_status = status
-    vim.fn.cmd('redraws')
+    vim.cmd('redraws')
 end)
 
 M.trunc_width = setmetatable({
