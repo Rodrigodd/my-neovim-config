@@ -43,7 +43,7 @@ local function line_to_echo(line)
     return list
 end
 
-vim.keymap.set('n', '<leader>s', function()
+vim.keymap.set('n', '<leader>K', function()
     local path = vim.api.nvim_buf_get_name(0) .. ': '
     local loc = nil
     if navic.is_available() then
