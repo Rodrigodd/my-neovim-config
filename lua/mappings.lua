@@ -79,6 +79,9 @@ augroup end
 -- Y yank until the end of line
 map('n', 'Y', 'y$')
 
+-- map Ctrl+C to copy to clipboard in visual
+map('v', '<C-c>', '"+y')
+
 -- visual select pasted text
 map('n', 'gp', '`[v`]')
 
