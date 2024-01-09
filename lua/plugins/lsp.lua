@@ -211,7 +211,19 @@ nvim_lsp.pyright.setup {
             },
             -- pythonPath = [[C:\Users\Rodrigo\AppData\Local\Programs\Python\Python39\python.exe]],
         }
-    }
+    },
+    on_new_config = function(config, root_dir)
+        -- check if there is a .venv folder in the current directory
+        local match = vim.fn.glob(root_dir .. '/.venv/Scripts/python.exe') -- windows
+        if match == '' then
+            match = vim.fn.glob(root_dir .. '/.venv/bin/python') -- macos/linux
+        end
+        if match ~= '' then
+            print('Using python virtualenv: ' .. match)
+            config.settings.python.pythonPath = match
+        end
+        return config
+    end
 }
 -- Enable jedi_language_server
 nvim_lsp.jedi_language_server.setup {
