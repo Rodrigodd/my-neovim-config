@@ -56,4 +56,5 @@ vim.keymap.set('n', '<leader>K', function()
     local echo = { { path, 'Comment' } }
     vim.list_extend(echo, loc)
     vim.api.nvim_echo(echo, false, {})
+    vim.cmd('redraws')
 end, {})
