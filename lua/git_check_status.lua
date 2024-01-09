@@ -2,8 +2,9 @@ local M = {}
 
 -- Define a function to check the Git status
 function M.git_status(pwd, on_status, upstream)
-    vim.fn.jobstart('git remote update', {
-        detach = true,
+    local nvim_config_path = vim.fn.stdpath('config')
+    vim.fn.jobstart('git -C ' .. nvim_config_path .. ' remote update', {
+        -- detach = true,
         on_exit = function(_, code)
             upstream = upstream or '@{u}'
             local cmd = "cd " .. pwd .. " && git "
@@ -33,7 +34,7 @@ function M.git_status(pwd, on_status, upstream)
                 status = "diverged"
             end
 
-            print('on status: ' .. status)
+            -- print('on status: ' .. status)
             on_status(status)
         end
     })
