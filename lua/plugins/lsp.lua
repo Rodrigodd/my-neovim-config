@@ -201,7 +201,7 @@ nvim_lsp.tsserver.setup {}
 
 -- Enable pylyzer
 nvim_lsp.pyright.setup {
-    autostart = false,
+    autostart = true,
     settings = {
         python = {
             analysis = {
@@ -209,19 +209,23 @@ nvim_lsp.pyright.setup {
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true
             },
-            -- pythonPath = [[C:\Users\Rodrigo\AppData\Local\Programs\Python\Python39\python.exe]],
+            pythonPath = [[C:\Users\Rodri\AppData\Local\Microsoft\WindowsApps\python.exe]],
+            -- pythonPath = [[python]]
         }
     },
     on_new_config = function(config, root_dir)
-        -- check if there is a .venv folder in the current directory
-        local match = vim.fn.glob(root_dir .. '/.venv/Scripts/python.exe') -- windows
-        if match == '' then
-            match = vim.fn.glob(root_dir .. '/.venv/bin/python') -- macos/linux
+        for dir in vim.fs.parents(root_dir .. '/dummy.txt') do
+            local match = vim.fn.glob(dir .. '/.venv/Scripts/python.exe') -- windows
+            if match == '' then
+                match = vim.fn.glob(dir .. '/.venv/bin/python') -- macos/linux
+            end
+            if match ~= '' then
+                print('Using python virtualenv: ' .. match)
+                config.settings.python.pythonPath = match
+                return config
+            end
         end
-        if match ~= '' then
-            print('Using python virtualenv: ' .. match)
-            config.settings.python.pythonPath = match
-        end
+
         return config
     end
 }
