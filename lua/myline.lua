@@ -153,12 +153,13 @@ M.get_current_mode = function(self)
 end
 
 M.get_config_status = function()
-    if config_git_status == "up-to-date" then
+    if config_git_status == "" then
+        return ""
+    elseif config_git_status == "up-to-date" then
         return ""
     elseif config_git_status == "dirty" then
-        return " 󱥸 "
+        return " 󱥸  "
     elseif config_git_status == "need to push" then
-        -- 󱥸󰽷
         return " • "
     else
         return "config " .. config_git_status .. " "
@@ -194,9 +195,9 @@ M.get_filename = function(self)
     local file = icon
 
     if self:is_truncated(self.trunc_width.filename) then
-        file = file .. " %t%<"
+        file = file .. " %t"
     else
-        file = file .. " %f%<"
+        file = file .. " %f"
     end
 
     local info = fn.getbufinfo(self.context.bufnr)
@@ -276,7 +277,8 @@ M.set_active = function(self)
 
     return table.concat({
         colors.active, mode, filename, close_section,
-        diagnostics, status,
+        diagnostics, '%<',
+        status,
         "%=",
         config_git_status,
         git,
