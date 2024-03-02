@@ -271,7 +271,7 @@ nvim_lsp.pyright.setup {
         for dir in vim.fs.parents(root_dir .. '/dummy.txt') do
             local match = vim.fn.glob(dir .. '/.venv/Scripts/python.exe') -- windows
             if match == '' then
-                match = vim.fn.glob(dir .. '/.venv/bin/python') -- macos/linux
+                match = vim.fn.glob(dir .. '/.venv/bin/python')           -- macos/linux
             end
             if match ~= '' then
                 print('Using python virtualenv: ' .. match)

@@ -78,95 +78,95 @@ return {
         init = function()
             -- Create a cmd for it
             vim.api.nvim_create_user_command(
-            "Align",
-            function (opts)
-                require('align').align_to_string({
-                    preview = true,
-                    regex = false,
-                })
-            end,
-            { nargs = 0 }
+                "Align",
+                function(opts)
+                    require('align').align_to_string({
+                        preview = true,
+                        regex = false,
+                    })
+                end,
+                { nargs = 0 }
             )
 
             local NS = { noremap = true, silent = true }
 
             -- Aligns to 1 character
             vim.keymap.set(
-            'x',
-            'aa',
-            function()
-                require'align'.align_to_char({
-                    length = 1,
-                })
-            end,
-            NS
+                'x',
+                'aa',
+                function()
+                    require 'align'.align_to_char({
+                        length = 1,
+                    })
+                end,
+                NS
             )
 
             -- Aligns to 2 characters with previews
             vim.keymap.set(
-            'x',
-            'ad',
-            function()
-                require'align'.align_to_char({
-                    preview = true,
-                    length = 2,
-                })
-            end,
-            NS
+                'x',
+                'ad',
+                function()
+                    require 'align'.align_to_char({
+                        preview = true,
+                        length = 2,
+                    })
+                end,
+                NS
             )
 
             -- Aligns to a string with previews
             vim.keymap.set(
-            'x',
-            'aw',
-            function()
-                require'align'.align_to_string({
-                    preview = true,
-                    regex = false,
-                })
-            end,
-            NS
+                'x',
+                'aw',
+                function()
+                    require 'align'.align_to_string({
+                        preview = true,
+                        regex = false,
+                    })
+                end,
+                NS
             )
 
             -- Aligns to a Vim regex with previews
             vim.keymap.set(
-            'x',
-            'ar',
-            function()
-                require'align'.align_to_string({
-                    preview = true,
-                    regex = true,
-                })
-            end,
-            NS
+                'x',
+                'ar',
+                function()
+                    require 'align'.align_to_string({
+                        preview = true,
+                        regex = true,
+                    })
+                end,
+                NS
             )
 
             -- Example gawip to align a paragraph to a string with previews
             vim.keymap.set(
-            'n',
-            'gaw',
-            function()
-                local a = require'align'
-                a.operator(
-                a.align_to_string,
-                {
-                    regex = false,
-                    preview = true,
-                }
-                )
-            end,
-            NS
+                'n',
+                'gaw',
+                function()
+                    local a = require 'align'
+                    a.operator(
+                        a.align_to_string,
+                        {
+                            regex = false,
+                            preview = true,
+                        }
+                    )
+                end,
+                NS
             )
 
             -- Example gaaip to align a paragraph to 1 character
             vim.keymap.set(
-            'n',
-            'gaa',
-            function()
-                local a = require'align'
-                a.operator(a.align_to_char)
-            end,
-            NS
+                'n',
+                'gaa',
+                function()
+                    local a = require 'align'
+                    a.operator(a.align_to_char)
+                end,
+                NS
             )
         end
     },
@@ -222,18 +222,22 @@ return {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-ui-select.nvim',
-            { "nvim-telescope/telescope-live-grep-args.nvim" , version = "^1.0.0" },
+            { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
         },
         config = function()
             require('plugins.telescope')
         end,
     },
     'marko-cerovac/material.nvim',
-    { 'rose-pine/neovim', name = 'rose-pine', opts = {
-        disable_background = true,
-        disable_float_background = false,
-        disable_italics = true,
-    } },
+    {
+        'rose-pine/neovim',
+        name = 'rose-pine',
+        opts = {
+            disable_background = true,
+            disable_float_background = false,
+            disable_italics = true,
+        }
+    },
     'lukas-reineke/indent-blankline.nvim',
     {
         'nvim-treesitter/nvim-treesitter',
@@ -378,6 +382,7 @@ return {
     },
     {
         'L3MON4D3/LuaSnip',
+        version = "v2.*",
         config = function()
             require('plugins.snips')
         end
