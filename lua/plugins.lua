@@ -238,7 +238,11 @@ return {
             disable_italics = true,
         }
     },
-    'lukas-reineke/indent-blankline.nvim',
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        main = 'ibl',
+        opts = {},
+    },
     {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {
