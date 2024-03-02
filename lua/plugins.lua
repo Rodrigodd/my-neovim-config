@@ -294,15 +294,6 @@ return {
         end,
     },
     {
-        -- 'simrat39/rust-tools.nvim',
-        'Ciel-MC/rust-tools.nvim',
-        dependencies = {
-            'mfussenegger/nvim-dap',
-            'neovim/nvim-lspconfig'
-        },
-        before = 'mason.nvim',
-    },
-    {
         "barreiroleo/ltex-extra.nvim",
         before = 'mason.nvim'
     },
@@ -480,6 +471,13 @@ return {
     -- rust plugins
     'cespare/vim-toml',
     'ron-rs/ron.vim',
+    {
+        'vxpm/ferris.nvim',
+        before = 'mason.nvim',
+        opts = {
+            create_commands = true,
+        },
+    },
     {
         'saecki/crates.nvim',
         tag = 'v0.3.0',

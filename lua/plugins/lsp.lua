@@ -67,8 +67,62 @@ nvim_lsp.util.default_config = vim.tbl_extend("force", nvim_lsp.util.default_con
 nvim_lsp.util.default_config.on_attach = on_attach
 
 --
-require 'plugins.lsp.rust'
 require 'plugins.lsp.ltex'
+
+-- rust
+nvim_lsp.rust_analyzer.setup {
+    cmd = { "rust-analyzer" },
+    on_attach = require('lspconfig.util').default_config.on_attach,
+    standalone = false,
+    root_dir = function(fname)
+        if fname:match('.cargo/registry') then
+            return nil
+        end
+        if fname:match('.cargo/git') then
+            return nil
+        end
+        if fname:match('.rustup/toolchains') then
+            return nil
+        end
+        return require('lspconfig.server_configurations.rust_analyzer').default_config.root_dir(fname)
+    end,
+    settings = {
+        ["rust-analyzer"] = {
+            assist = {
+                importMergeBehavior = "module",
+                importPrefix = "by_self",
+            },
+            cargo = {
+                loadOutDirsFromCheck = true,
+                -- features = { "opengl" },
+                -- allFeatures = true,
+                --target
+                -- target = "aarch64-linux-android",
+                -- target = "wasm32-unknown-unknown",
+            },
+            checkOnSave = {
+                command = "clippy",
+            },
+            procMacro = { enable = true },
+            inlayHints = { locationLinks = false },
+            -- trace = { server = "verbose" },
+            -- diagnostics = {
+            --     enableExperimental = true,
+            -- }
+        }
+    },
+    on_init = function(client)
+        local config, err = pcall(require, 'vsconfig')
+        if err then
+            return false
+        end
+
+        client.config.settings["rust-analyzer"] = vim.tbl_extend('force', client.config.settings["rust-analyzer"],
+            config["rust-analyzer"])
+        client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+        return true
+    end
+}
 
 -- toml lsp
 nvim_lsp.taplo.setup {
