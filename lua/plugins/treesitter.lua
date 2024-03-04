@@ -5,11 +5,11 @@ require 'nvim-treesitter.configs'.setup {
         "lua",
         "markdown",
         "c",
+        "cpp",
         "vim",
     },
     highlight = {
         enable = true,
-        disable = {},
         disable = function(lang, bufnr) -- Disable in large buffers
             local lines = vim.api.nvim_buf_line_count(bufnr)
             local file_size = vim.api.nvim_buf_get_offset(bufnr, lines)
@@ -23,7 +23,7 @@ require 'nvim-treesitter.configs'.setup {
     playground = {
         enable = true,
         disable = {},
-        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+        updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false, -- Whether the query persists across vim sessions
         keybindings = {
             toggle_query_editor = 'o',
