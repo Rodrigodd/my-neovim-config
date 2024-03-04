@@ -255,9 +255,8 @@ return {
         end
     },
     {
-        "SmiteshP/nvim-gps",
+        'SmiteshP/nvim-navic',
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        after = 'nvim-navic',
         config = function()
             require 'plugins.navic'
         end
@@ -378,7 +377,6 @@ return {
             'neovim/nvim-lspconfig',
             'nvim-telescope/telescope.nvim',
             'SmiteshP/nvim-navic',
-            'nvim-navic',
         },
         config = function()
             require('plugins.lsp')

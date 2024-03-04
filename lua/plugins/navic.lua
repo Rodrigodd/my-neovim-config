@@ -1,6 +1,6 @@
-require('nvim-gps').setup {
-    separator = ' > ',
-}
+-- require('nvim-gps').setup {
+--     separator = ' > ',
+-- }
 local navic = require('nvim-navic')
 
 navic.setup {
@@ -49,7 +49,7 @@ vim.keymap.set('n', '<leader>K', function()
     if navic.is_available() then
         loc = line_to_echo(navic.get_location())
     else
-        loc = { { require('nvim-gps').get_location() or "" } }
+        -- loc = { { require('nvim-gps').get_location() or "" } }
     end
 
 
