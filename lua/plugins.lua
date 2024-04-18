@@ -8,6 +8,12 @@ return {
             or './install.sh',
     },
     {
+        'Apeiros-46B/qalc.nvim',
+        config = function()
+            require('qalc').setup {}
+        end,
+    },
+    {
         'numToStr/Comment.nvim',
         opts = {
             -- add any options here
