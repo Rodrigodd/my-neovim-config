@@ -41,12 +41,16 @@ telescope.setup {
             override_file_sorter = true,     -- override the file sorter
             case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
             -- the default case_mode is "smart_case"
+        },
+        undo = {
+
         }
     }
 }
 telescope.load_extension("ui-select")
 telescope.load_extension('live_grep_args')
 telescope.load_extension('fzf')
+telescope.load_extension("undo")
 
 local tsb = require 'telescope.builtin'
 vim.keymap.set('n', '<leader>fr', tsb.resume)
@@ -56,3 +60,4 @@ vim.keymap.set('n', '<leader>fg', telescope.extensions.live_grep_args.live_grep_
 vim.keymap.set('n', '<leader>fb', tsb.buffers)
 vim.keymap.set('n', '<leader>fh', tsb.help_tags)
 vim.keymap.set('n', '<leader>fd', function() tsb.diagnostics { severity_limit = 'info' } end)
+vim.keymap.set('n', '<leader>fu', telescope.extensions.undo.undo)
