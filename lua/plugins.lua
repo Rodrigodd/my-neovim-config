@@ -1,5 +1,4 @@
 return {
-    'wbthomason/packer.nvim', -- Package manager
     'nvim-lua/plenary.nvim',
     {
         'Joakker/lua-json5',
