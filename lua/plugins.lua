@@ -249,7 +249,15 @@ return {
     {
         'lukas-reineke/indent-blankline.nvim',
         main = 'ibl',
-        opts = {},
+        opts = {
+            scope = {
+                include = {
+                    node_type = {
+                        python = { "if_statement", "for_statement", "while_statement", "function_definition", "try_statement", "with_statement" },
+                    }
+                }
+            }
+        },
     },
     {
         'nvim-treesitter/nvim-treesitter',
