@@ -483,13 +483,6 @@ return {
 
     -- dap
     { "mfussenegger/nvim-dap" },
-    {
-        "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap", 'Joakker/lua-json5' },
-        config = function()
-            require('plugins.dap-ui')
-        end
-    },
 
     -- rust plugins
     'cespare/vim-toml',
