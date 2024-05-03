@@ -58,6 +58,7 @@ vim.keymap.set('n', '<leader>ff', tsb.find_files)
 -- vim.keymap.set('n', '<leader>fg', tsb.live_grep)
 vim.keymap.set('n', '<leader>fg', telescope.extensions.live_grep_args.live_grep_args)
 vim.keymap.set('n', '<leader>fb', tsb.buffers)
+vim.keymap.set('n', '<leader>fe', tsb.buffers) -- easier to type than fb
 vim.keymap.set('n', '<leader>fh', tsb.help_tags)
 vim.keymap.set('n', '<leader>fd', function() tsb.diagnostics { severity_limit = 'info' } end)
 vim.keymap.set('n', '<leader>fu', telescope.extensions.undo.undo)
