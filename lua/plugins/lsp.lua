@@ -52,7 +52,9 @@ local on_attach = function(client, bufnr)
             callback = function()
                 vim.lsp.buf.format({
                     timeout_ms = 1000,
-                    filter = function(c) return c.name ~= "tsserver" end,
+                    filter = function(c)
+                        return c.name ~= "tsserver" and c.name ~= "verible"
+                    end,
                 })
             end
         })
@@ -312,7 +314,21 @@ nvim_lsp.hls.setup {
 }
 
 -- Enable julia lsp
-require 'lspconfig'.julials.setup {}
+nvim_lsp.julials.setup {}
+
+-- Enable SystemVerilog language server
+-- vim.tbl_deep_extend('keep', nvim_lsp, {
+--     veridian = {
+--         cmd = { 'veridian' },
+--         filetypes = 'systemverilog',
+--         name = 'veridian',
+--     }
+-- })
+-- nvim_lsp.veridian.setup {}
+
+require 'lspconfig'.verible.setup {
+    cmd = { 'verible-verilog-ls', '--rules_config_search' },
+}
 
 local mod = {}
 
