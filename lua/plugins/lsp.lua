@@ -53,7 +53,9 @@ local on_attach = function(client, bufnr)
                 vim.lsp.buf.format({
                     timeout_ms = 1000,
                     filter = function(c)
-                        return c.name ~= "tsserver" and c.name ~= "verible"
+                        if c.name == "tsserver" then return false end
+                        if c.name == "verible" then return false end
+                        return true
                     end,
                 })
             end
