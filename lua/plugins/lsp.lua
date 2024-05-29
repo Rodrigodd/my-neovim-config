@@ -256,8 +256,12 @@ nvim_lsp.marksman.setup {
 
 -- Enable tailwindcss language server
 nvim_lsp.tailwindcss.setup {
-    root_dir = nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
-        'postcss.config.ts', 'package.json', 'node_modules')
+    root_dir = function()
+        -- if not vim.fn.executable('tailwindcss-language-server') then
+        --     return nil
+        -- end
+        return nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js', 'postcss.config.ts')
+    end
 }
 nvim_lsp.prismals.setup {}
 -- Enable tsserver language server
