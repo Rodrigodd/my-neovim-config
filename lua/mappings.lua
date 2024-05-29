@@ -9,8 +9,8 @@ vim.g.maplocalleader = " "
 map({ 'n', 'v' }, 'K', '<Nop>')
 
 --Remap for dealing with word wrap
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 --Center search result when jumping around
 -- map('n', 'n', "nzz")
