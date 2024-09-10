@@ -157,6 +157,12 @@ nvim_lsp.clangd.setup {
     init_options = {
         clangdFileStatus = true
     },
+    on_attach = function(client, bufnr)
+        lsp_status.on_attach(client, bufnr)
+        require('lspconfig.util').default_config.on_attach(client, bufnr)
+        -- map 'gh' to ClangdSwitchSourceHeader
+        map('n', 'gh', function() vim.cmd("ClangdSwitchSourceHeader") end, { buffer = bufnr })
+    end,
 }
 
 
