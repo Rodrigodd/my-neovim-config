@@ -267,8 +267,8 @@ nvim_lsp.prismals.setup {}
 -- Enable tsserver language server
 nvim_lsp.tsserver.setup {}
 
--- Enable pylyzer
-nvim_lsp.pyright.setup {
+-- Enable pyright
+nvim_lsp.basedpyright.setup {
     autostart = true,
     settings = {
         python = {
