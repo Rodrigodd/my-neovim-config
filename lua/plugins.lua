@@ -229,8 +229,7 @@ return {
             { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
-                build =
-                'rm.exe -rf build && cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+                build = 'rm -rf build && cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
             },
             "debugloop/telescope-undo.nvim",
         },
@@ -464,30 +463,30 @@ return {
     -- java plugins
     'mfussenegger/nvim-jdtls',
 
-    {
-        "vhyrro/luarocks.nvim",
-        priority = 1000,
-        config = true,
-        opts = {
-            rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" }
-        }
-
-    },
-    {
-        "rest-nvim/rest.nvim",
-        ft = "http",
-        dependencies = { "luarocks.nvim" },
-        config = function()
-            require("rest-nvim").setup {
-                keybinds = {
-                    {
-                        "<localleader>rr", "<cmd>Rest run<cr>", "Run request under the cursor",
-                    },
-                    {
-                        "<localleader>rl", "<cmd>Rest run last<cr>", "Re-run latest request",
-                    },
-                }
-            }
-        end,
-    }
+    -- {
+    --     "vhyrro/luarocks.nvim",
+    --     priority = 1000,
+    --     config = true,
+    --     opts = {
+    --         rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" }
+    --     }
+    --
+    -- },
+    -- {
+    --     "rest-nvim/rest.nvim",
+    --     ft = "http",
+    --     dependencies = { "luarocks.nvim" },
+    --     config = function()
+    --         require("rest-nvim").setup {
+    --             keybinds = {
+    --                 {
+    --                     "<localleader>rr", "<cmd>Rest run<cr>", "Run request under the cursor",
+    --                 },
+    --                 {
+    --                     "<localleader>rl", "<cmd>Rest run last<cr>", "Re-run latest request",
+    --                 },
+    --             }
+    --         }
+    --     end,
+    -- }
 }
