@@ -221,6 +221,7 @@ return {
     -- UI to select things (files, grep results, open buffers...)
     {
         'nvim-telescope/telescope.nvim',
+        version = '^1.0.0',
         dependencies = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
