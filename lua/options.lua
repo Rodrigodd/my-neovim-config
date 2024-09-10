@@ -15,6 +15,9 @@ endif
 vim.o.hlsearch = true
 vim.o.incsearch = true
 
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
 vim.o.cursorline = true    -- Highlight line
 vim.o.scrolloff = 2
 vim.o.inccommand = "split" --Incremental live completion
