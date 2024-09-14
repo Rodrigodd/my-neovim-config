@@ -1,4 +1,5 @@
 return {
+    'shiracamus/vim-syntax-x86-objdump-d',
     'nvim-lua/plenary.nvim',
     {
         'Joakker/lua-json5',
