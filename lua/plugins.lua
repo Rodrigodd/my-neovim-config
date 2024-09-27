@@ -143,7 +143,8 @@ return {
             { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
-                build = 'rm -rf build && cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+                build =
+                'rm -rf build && cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
             },
             "debugloop/telescope-undo.nvim",
         },
