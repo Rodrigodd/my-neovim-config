@@ -11,6 +11,23 @@ if has("win32") && has("nvim")
 endif
 ]])
 
+-- set default shell
+if vim.fn.has("unix") then
+    if vim.fn.executable("fish") then
+        vim.o.shell = "fish"
+    elseif vim.fn.executable("zsh") then
+        vim.o.shell = "zsh"
+    elseif vim.fn.executable("bash") then
+        vim.o.shell = "bash"
+    end
+elseif vim.fn.has("win32") then
+    if vim.fn.executable("pwsh") then
+        vim.o.shell = "pwsh"
+    elseif vim.fn.executable("cmd") then
+        vim.o.shell = "cmd"
+    end
+end
+
 --Set highlight on search
 vim.o.hlsearch = true
 vim.o.incsearch = true
