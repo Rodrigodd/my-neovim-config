@@ -265,7 +265,8 @@ nvim_lsp.tailwindcss.setup {
 }
 nvim_lsp.prismals.setup {}
 -- Enable tsserver language server
-nvim_lsp.tsserver.setup {}
+nvim_lsp.ts_ls.setup {}
+nvim_lsp.eslint.setup {}
 
 -- Enable pyright
 nvim_lsp.basedpyright.setup {
