@@ -369,7 +369,7 @@ return {
                     jump_next = "]]",
                     accept = "<CR>",
                     refresh = "gr",
-                    open = "<M-CR>"
+                    open = "<M-i>"
                 },
                 layout = {
                     position = "bottom", -- | top | left | right
