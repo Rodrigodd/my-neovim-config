@@ -160,7 +160,11 @@ nvim_lsp.clangd.setup {
     cmd = {
         "clangd",
         -- "--background-index",
-        "--fallback-style=None"
+        "--fallback-style=None",
+        -- make single-threaded, due to heap corruption in clangd
+        "-j=1",
+        -- whitelist all drivers
+        "--query-driver=**",
     },
     init_options = {
         clangdFileStatus = true
