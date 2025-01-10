@@ -39,6 +39,12 @@ local on_attach = function(client, bufnr)
     map('n', 'gr', tsb.lsp_references, opts)
     map('n', '<leader>fs', tsb.lsp_document_symbols, opts)
     map('n', '<leader>fw', tsb.lsp_dynamic_workspace_symbols, opts)
+    -- map('n', '<leader>fi', tsb.lsp_incoming_calls)
+    -- map('n', '<leader>fo', tsb.lsp_outgoing_calls)
+
+    map('n', '<leader>ii', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    end, opts)
 
 
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
