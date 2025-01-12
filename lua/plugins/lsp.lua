@@ -90,9 +90,42 @@ nvim_lsp.util.default_config.on_attach = on_attach
 require 'plugins.lsp.ltex'
 
 -- rust
+local function open_parent_module(bufnr)
+    local method_name = 'experimental/parentModule'
+    bufnr = 0
+    local client = nvim_lsp.util.get_active_client_by_name(bufnr, 'rust_analyzer')
+    if not client then
+        return vim.notify(('method %s is not supported by any servers active on the current buffer'):format(method_name))
+    end
+    local params = vim.lsp.util.make_position_params(bufnr, client.offset_encoding)
+    client.request(method_name, params, function(err, result)
+        if result == nil then
+            if err == nil then
+                vim.notify("no answer from rust-analyzer for parent module")
+                return
+            end
+
+            vim.notify("error opening parent module", err)
+            return
+        end
+
+        -- HACK: workaround for https://github.com/neovim/neovim/issues/19492
+        local position = result
+        if vim.isarray(position) then
+            position = position[1]
+        end
+
+        vim.lsp.util.jump_to_location(position, "utf-8", true)
+    end, bufnr)
+end
+
 nvim_lsp.rust_analyzer.setup {
     cmd = { "rust-analyzer" },
-    on_attach = require('lspconfig.util').default_config.on_attach,
+    -- autostart = false,
+    on_attach = function(client, bufnr)
+        require('lspconfig.util').default_config.on_attach(client, bufnr)
+        map('n', 'gh', open_parent_module, { buffer = bufnr })
+    end,
     standalone = false,
     root_dir = function(fname)
         if fname:match('.cargo/registry') then
@@ -114,7 +147,7 @@ nvim_lsp.rust_analyzer.setup {
             },
             cargo = {
                 loadOutDirsFromCheck = true,
-                -- features = { "opengl" },
+                -- features = { "vcd_trace" },
                 -- allFeatures = true,
                 --target
                 -- target = "aarch64-linux-android",
