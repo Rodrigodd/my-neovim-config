@@ -339,6 +339,8 @@ return {
     -- dap
     { "mfussenegger/nvim-dap" },
 
+    { 'sakhnik/nvim-gdb' },
+
     -- rust plugins
     'cespare/vim-toml',
     'ron-rs/ron.vim',
