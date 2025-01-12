@@ -165,13 +165,17 @@ nvim_lsp.rust_analyzer.setup {
         }
     },
     on_init = function(client)
-        local config, err = pcall(require, 'vsconfig')
-        if err then
+        local load_config = require('vsconfig')
+        local is_ok, config = pcall(load_config)
+        if not is_ok then
             return false
         end
 
         client.config.settings["rust-analyzer"] = vim.tbl_extend('force', client.config.settings["rust-analyzer"],
             config["rust-analyzer"])
+
+        vim.print("rust-analyzer settings: " .. vim.inspect(client.config.settings["rust-analyzer"]))
+
         client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
         return true
     end
