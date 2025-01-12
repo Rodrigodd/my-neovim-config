@@ -95,3 +95,6 @@ map('i', '<C-F11>', '<C-O>:set spell!<CR>')
 -- diagnostics
 map('n', 'g[', vim.diagnostic.goto_prev)
 map('n', 'g]', vim.diagnostic.goto_next)
+
+-- map ! to :!
+map('n', '!', ':!')
