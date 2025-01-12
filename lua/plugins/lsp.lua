@@ -386,6 +386,19 @@ nvim_lsp.hls.setup {
 -- Enable julia lsp
 nvim_lsp.julials.setup {}
 
+-- Enable gopls
+nvim_lsp.gopls.setup {
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+                shadow = true,
+            },
+            staticcheck = true,
+        },
+    },
+}
+
 -- Enable SystemVerilog language server
 -- vim.tbl_deep_extend('keep', nvim_lsp, {
 --     veridian = {
