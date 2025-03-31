@@ -56,6 +56,18 @@ local on_attach = function(client, bufnr)
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, opts)
 
+    map(
+        "n", "<leader>j",
+        function()
+            local toogle = not vim.diagnostic.config().virtual_lines
+            vim.diagnostic.config({
+                virtual_lines = toogle,
+            })
+            vim.lsp.inlay_hint.enable(toogle)
+        end,
+        { desc = "Toggle lsp_lines" }
+    )
+
 
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
     if client.server_capabilities.documentFormattingProvider then
@@ -137,7 +149,7 @@ nvim_lsp.rust_analyzer.setup {
         if fname:match('.rustup/toolchains') then
             return nil
         end
-        return require('lspconfig.server_configurations.rust_analyzer').default_config.root_dir(fname)
+        return require('lspconfig.configs.rust_analyzer').default_config.root_dir(fname)
     end,
     settings = {
         ["rust-analyzer"] = {
@@ -317,7 +329,8 @@ nvim_lsp.tailwindcss.setup {
         -- if not vim.fn.executable('tailwindcss-language-server') then
         --     return nil
         -- end
-        return nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js', 'postcss.config.ts')
+        return nvim_lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
+            'postcss.config.ts')
     end
 }
 nvim_lsp.prismals.setup {}

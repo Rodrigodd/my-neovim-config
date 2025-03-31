@@ -252,7 +252,7 @@ end
 
 M.get_lsp_status = function()
     -- if #vim.lsp.buf_get_clients() > 0 then
-    if #vim.lsp.get_active_clients() > 0 then
+    if #vim.lsp.get_clients() > 0 then
         return require 'lsp_status_line'.status_line()
     end
     return ''

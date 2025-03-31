@@ -217,22 +217,6 @@ return {
         end
     },
     {
-        name = "lsp_lines",
-        url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function()
-            vim.keymap.set(
-                "n", "<leader>j",
-                function()
-                    vim.diagnostic.config({
-                        virtual_text = not require('lsp_lines').toggle()
-                    })
-                end,
-                { desc = "Toggle lsp_lines" }
-            )
-            require("lsp_lines").setup()
-        end,
-    },
-    {
         "barreiroleo/ltex-extra.nvim",
         before = 'mason.nvim'
     },
@@ -344,10 +328,10 @@ return {
             --- The below dependencies are optional,
             -- "echasnovski/mini.pick", -- for file_selector provider mini.pick
             "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-            "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+            "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
             -- "ibhagwan/fzf-lua", -- for file_selector provider fzf
-            "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-            "zbirenbaum/copilot.lua", -- for providers='copilot'
+            "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
+            "zbirenbaum/copilot.lua",        -- for providers='copilot'
             {
                 -- support for image pasting
                 "HakonHarnes/img-clip.nvim",
